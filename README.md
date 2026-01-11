@@ -73,8 +73,13 @@ This project is built for the **NHA Sandbox Environment** and implements the lat
 ---
 
 ## 👨‍💻 Author
+
 **Nisar**
-*A Healthcare Domain Expert turned Tech Innovator. This project (Phase 0.1) demonstrates my commitment to bridging the gap between clinical excellence and secure, ABDM-compliant digital infrastructure using modern Vibe-Coding techniques.*
+*Healthcare Operations Expert | Gen AI & Medical Law Enthusiast | HealthTech Innovator*
+
+I am a student with a solid foundation in **Healthcare Operations**, currently pivoting into the intersection of **Technology and Medicine**. My passion lies in **Python**, **Generative AI**, and the evolving landscape of **Medical Law**. 
+
+I believe that the future of healthcare is digital, and I am building my career to be at the forefront of this transformation. By combining my domain expertise with **Vibe-Coding** (Agentic AI collaboration), I focus on creating high-quality, compliant health-tech solutions with a smooth and fast development workflow.
 
 ---
 *Developed as part of the Phase 0.1 Smart Ingress Initiative.*
