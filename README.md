@@ -74,12 +74,12 @@ This project is built for the **NHA Sandbox Environment** and implements the lat
 
 ## 👨‍💻 Author
 
-**Nisar**
-*Healthcare Operations Expert | Gen AI & Medical Law Enthusiast | HealthTech Innovator*
+**Nisar Ahmed**
+*Health Ops Veteran ➡️ AI Architect & Regulatory Engineer*
 
-I am a student with a solid foundation in **Healthcare Operations**, currently pivoting into the intersection of **Technology and Medicine**. My passion lies in **Python**, **Generative AI**, and the evolving landscape of **Medical Law**. 
+I am a **Healthcare Operations Expert** pivoting into the intersection of **Technology and Medicine**. My passion lies in **Python**, **Generative AI**, and the evolving landscape of **Medical Law** (currently studying at IIT-KGP and IIT-G). 
 
-I believe that the future of healthcare is digital, and I am building my career to be at the forefront of this transformation. By combining my domain expertise with **Vibe-Coding** (Agentic AI collaboration), I focus on creating high-quality, compliant health-tech solutions with a smooth and fast development workflow.
+I specialize in building "Techno-Legal" guardrails to ensure healthcare innovation remains compliant with **India's DPDP Act** and **ABDM 2.0** standards. By combining 10 years of domain expertise with **Vibe-Coding** (Agentic AI collaboration), I create high-quality, compliant health-tech solutions.
 
 ---
 *Developed as part of the Phase 0.1 Smart Ingress Initiative.*
