@@ -10,7 +10,7 @@
 ## 🌟 Project Overview
 OmniIngest ABDM 2.0 is a high-performance, interactive data ingestion layer designed to bridge the gap between messy legacy healthcare data and the strict requirements of the **Ayushman Bharat Digital Mission (ABDM)**. 
 
-Built with **Privacy-By-Default** principles, this project is part of a **Vibe-Coding (Agentic AI Assisted)** development journey. It ensures that every record entering the system is compliant with the **India DPDP Act (2025/2026)** before it even touches a database.
+Built with **Privacy-By-Default** principles, this project is built by a **Healthcare Domain Expert** leveraging the power of **Vibe-Coding (Agentic AI Assisted)**. It ensures that every record entering the system is compliant with the **India DPDP Act (2025/2026)** before it even touches a database.
 
 > [!NOTE]
 > This repository represents **Phase 0.1 (Smart Ingress)** of a multi-phase HealthTech roadmap.
@@ -41,7 +41,7 @@ Built with **Privacy-By-Default** principles, this project is part of a **Vibe-C
 ---
 
 ## 📽️ Dashboard Walkthrough & Vibe-Coding
-The system provides a real-time **Compliance Health Overview**. Developed using **Vibe-Coding** (Agentic AI Collaboration), this project demonstrates how rising developers can use advanced tools to build complex, compliant, and medical-grade software rapidly.
+The system provides a real-time **Compliance Health Overview**. This project demonstrates how a **Healthcare Domain Expert** can leverage **Vibe-Coding** (Agentic AI Collaboration) to rapidly build complex, compliant, and medical-grade software.
 
 ---
 
@@ -74,7 +74,7 @@ This project is built for the **NHA Sandbox Environment** and implements the lat
 
 ## 👨‍💻 Author
 **Nisar**
-*A passionate Rising Developer and HealthTech enthusiast. This project (Phase 0.1) marks the beginning of my journey into building secure, ABDM-compliant digital health infrastructure using modern Vibe-Coding techniques.*
+*A Healthcare Domain Expert turned Tech Innovator. This project (Phase 0.1) demonstrates my commitment to bridging the gap between clinical excellence and secure, ABDM-compliant digital infrastructure using modern Vibe-Coding techniques.*
 
 ---
 *Developed as part of the Phase 0.1 Smart Ingress Initiative.*
