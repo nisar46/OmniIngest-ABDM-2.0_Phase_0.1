@@ -259,18 +259,20 @@ if uploaded_file is not None:
                     st.session_state.detected_format = ingress.detect_format(temp_path)
                 st.rerun()
     
-else:
-    st.markdown("<div style='text-align: center; padding: 50px;'>", unsafe_allow_html=True)
-    st.info("No data? Start with the 2026 Sandbox.")
-    if st.button("Load Sandbox Mode"):
-        st.session_state.data_source = "DUMMY"
-        with st.spinner("Building test environment..."):
-            create_sample_data.main()
-            st.session_state.processed_df = ingress.run_ingress("raw_data.csv")
-            st.session_state.mapping_confirmed = True
-            st.session_state.detected_format = ingress.detect_format("raw_data.csv")
-        st.rerun()
-    st.markdown("</div>", unsafe_allow_html=True)
+    else:
+        # Only show Sandbox button if no data is loaded at all
+        if st.session_state.processed_df is None:
+            st.markdown("<div style='text-align: center; padding: 50px;'>", unsafe_allow_html=True)
+            st.info("No data? Start with the 2026 Sandbox.")
+            if st.button("Load Sandbox Mode"):
+                st.session_state.data_source = "DUMMY"
+                with st.spinner("Building test environment..."):
+                    create_sample_data.main()
+                    st.session_state.processed_df = ingress.run_ingress("raw_data.csv")
+                    st.session_state.mapping_confirmed = True
+                    st.session_state.detected_format = ingress.detect_format("raw_data.csv")
+                st.rerun()
+            st.markdown("</div>", unsafe_allow_html=True)
 
 if st.session_state.processed_df is not None:
     st.markdown("---")
