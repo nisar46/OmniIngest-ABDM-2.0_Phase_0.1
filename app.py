@@ -171,13 +171,31 @@ def mask_pii_for_preview(df):
 
 # Sidebar Info
 st.sidebar.markdown("### 🛡️ System Status")
+
+# Sandbox Toggle Logic
+is_sandbox = st.sidebar.toggle("🛠️ Sandbox Mode", value=(st.session_state.data_source == "DUMMY"))
+
+if is_sandbox and st.session_state.data_source != "DUMMY":
+    st.session_state.data_source = "DUMMY"
+    with st.spinner("Building test environment..."):
+        create_sample_data.main()
+        st.session_state.processed_df = ingress.run_ingress("raw_data.csv")
+        st.session_state.mapping_confirmed = True
+        st.session_state.detected_format = ingress.detect_format("raw_data.csv")
+    st.rerun()
+elif not is_sandbox and st.session_state.data_source == "DUMMY":
+    reset_state()
+    st.rerun()
+
 if st.session_state.data_source:
     if st.session_state.data_source == "REAL":
         st.sidebar.success("🟢 REAL DATA")
+    elif st.session_state.data_source == "DUMMY":
+        st.sidebar.info("🟠 SANDBOX ACTIVE")
     else:
-        st.sidebar.info("🟠 SANDBOX")
+        st.sidebar.success(f"🟢 {st.session_state.data_source}")
 else:
-    st.sidebar.warning("⚪ OFFLINE")
+    st.sidebar.warning("⚪ OFFLINE (Awaiting Upload)")
 
 if st.sidebar.button("Reset Session"):
     reset_state()
@@ -195,6 +213,7 @@ if uploaded_file is not None:
         f.write(uploaded_file.getbuffer())
     
     st.markdown(f"<div style='background-color: #161b22; padding: 10px; border-radius: 8px; border-left: 4px solid #10a37f;'>📄 <b>Detected:</b> {uploaded_file.name}</div>", unsafe_allow_html=True)
+    st.session_state.data_source = "REAL" # Reset from DUMMY if file uploaded
     
     if not st.session_state.mapping_confirmed:
         st.subheader("🕵️ Smart Ingestion Discovery")
@@ -259,18 +278,10 @@ if uploaded_file is not None:
                     st.session_state.detected_format = ingress.detect_format(temp_path)
                 st.rerun()
     
-    # If no file is uploaded, show the Sandbox button
+    # If no file is uploaded and not in sandbox, show guidance
     if uploaded_file is None and st.session_state.processed_df is None:
         st.markdown("<div style='text-align: center; padding: 50px;'>", unsafe_allow_html=True)
-        st.info("No data? Start with the 2026 Sandbox.")
-        if st.button("Load Sandbox Mode", key="sandbox_btn_main"):
-            st.session_state.data_source = "DUMMY"
-            with st.spinner("Building test environment..."):
-                create_sample_data.main()
-                st.session_state.processed_df = ingress.run_ingress("raw_data.csv")
-                st.session_state.mapping_confirmed = True
-                st.session_state.detected_format = ingress.detect_format("raw_data.csv")
-            st.rerun()
+        st.info("No data? Enable **Sandbox Mode** in the sidebar to load dummy records.")
         st.markdown("</div>", unsafe_allow_html=True)
 
 if st.session_state.processed_df is not None:
