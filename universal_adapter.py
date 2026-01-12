@@ -1326,9 +1326,22 @@ def parse_hl7(filepath: str) -> pd.DataFrame:
                 records.append(record)
         
         if not records:
-            raise ValueError("No valid HL7 messages found in file")
+            # Fallback for messy HL7
+            record = {
+                'Patient_Name': 'Unknown/Redacted',
+                'ABHA_ID': None,
+                'Notice_Date': None,
+                'Notice_ID': Path(filepath).stem,
+                'Clinical_Payload': json.dumps({'raw_message': content[:2000]}),
+                'Consent_Status': 'ACTIVE'
+            }
+            records.append(record)
         
         df = pd.DataFrame(records)
+        # Force critical columns to string
+        for col in ['Patient_Name', 'ABHA_ID', 'Notice_ID', 'Notice_Date', 'Consent_Status']:
+            if col in df.columns:
+                df[col] = df[col].astype(str).replace('nan', None).replace('None', None)
         return df
     except Exception as e:
         raise ValueError(f"Error parsing HL7 file {filepath}: {str(e)}")
@@ -1408,13 +1421,17 @@ def parse_fhir(filepath: str) -> pd.DataFrame:
             raise ValueError("No valid FHIR resources found in file")
         
         df = pd.DataFrame(records)
+        # Force string types for ABDM fields
+        for col in ['Patient_Name', 'ABHA_ID', 'Notice_ID', 'Notice_Date', 'Consent_Status']:
+            if col in df.columns:
+                df[col] = df[col].astype(str).replace('nan', None).replace('None', None)
         return df
     except Exception as e:
         raise ValueError(f"Error parsing FHIR file {filepath}: {str(e)}")
 
 
 def parse_pdf(filepath: str) -> pd.DataFrame:
-    """Parse PDF file and extract structured data."""
+    """Parse PDF file and extract structured data with robust regex."""
     if not PDF_AVAILABLE:
         raise ImportError("PDF library is required. Install with: pip install PyPDF2 or pip install pdfplumber")
     
@@ -1426,54 +1443,79 @@ def parse_pdf(filepath: str) -> pd.DataFrame:
             import pdfplumber
             with pdfplumber.open(filepath) as pdf:
                 for page in pdf.pages:
-                    text_content += page.extract_text() + "\n"
+                    text_content += (page.extract_text() or "") + "\n"
         else:
             with open(filepath, 'rb') as f:
                 pdf_reader = PyPDF2.PdfReader(f)
                 for page in pdf_reader.pages:
-                    text_content += page.extract_text() + "\n"
+                    text_content += (page.extract_text() or "") + "\n"
         
         # Try to extract structured data from text
-        # Look for common patterns
         record = {}
         
-        # Extract patient name (common patterns)
+        # 1. Improved Patient Name Extraction (Handles underscores, mixed case, and common prefixes)
         name_patterns = [
-            r'Patient[:\s]+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)+)',
-            r'Name[:\s]+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)+)',
-            r'Patient Name[:\s]+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)+)'
+            r"Patient(?:'s)? Name[:\s]*([A-Za-z0-9_\s.]{3,50})",
+            r"Name[:\s]*([A-Za-z0-9_\s.]{3,50})",
+            r"Pt\.? Name[:\s]*([A-Za-z0-9_\s.]{3,50})",
+            r"Full Name[:\s]*([A-Za-z0-9_\s.]{3,50})"
         ]
         for pattern in name_patterns:
             match = re.search(pattern, text_content, re.IGNORECASE)
             if match:
-                record['Patient_Name'] = match.group(1)
+                record['Patient_Name'] = match.group(1).strip().split('\n')[0]
                 break
         
-        # Extract ABHA ID
+        # 2. Robust ABHA ID Extraction (Handles 14-digit numbers with or without hyphens)
+        # Matches formats like: 12-3456-7890-1234 or 12345678901234
         abha_patterns = [
-            r'ABHA[:\s]+([A-Z0-9]+)',
-            r'Health ID[:\s]+([A-Z0-9]+)',
-            r'ABHA ID[:\s]+([A-Z0-9]+)'
+            r"(?:ABHA|Health ID)(?:[:\s])*([0-9]{2}-?[0-9]{4}-?[0-9]{4}-?[0-9]{4})",
+            r"\b([0-9]{2}-[0-9]{4}-[0-9]{4}-[0-9]{4})\b",
+            r"\b([0-9]{14})\b"
         ]
         for pattern in abha_patterns:
             match = re.search(pattern, text_content, re.IGNORECASE)
             if match:
-                record['ABHA_ID'] = match.group(1)
+                record['ABHA_ID'] = match.group(1).strip()
                 break
         
-        # Extract dates
-        date_pattern = r'(\d{4}[-/]\d{2}[-/]\d{2})'
-        date_match = re.search(date_pattern, text_content)
-        if date_match:
-            record['Notice_Date'] = date_match.group(1).replace('/', '-')
+        # 3. Flexible Date Extraction (ABDM standard is YYYY-MM-DD)
+        date_patterns = [
+            r"(\d{4}[-/]\d{2}[-/]\d{2})",
+            r"(\d{2}[-/]\d{2}[-/]\d{4})"
+        ]
+        for pattern in date_patterns:
+            match = re.search(pattern, text_content)
+            if match:
+                raw_date = match.group(1).replace('/', '-')
+                # Ensure it's in canonical format if it was DD-MM-YYYY
+                if raw_date.find('-') == 2:
+                    parts = raw_date.split('-')
+                    record['Notice_Date'] = f"{parts[2]}-{parts[1]}-{parts[0]}"
+                else:
+                    record['Notice_Date'] = raw_date
+                break
+        
+        # 4. Notice ID Extraction
+        notice_patterns = [
+            r"Notice(?: ID)?[:\s]*([Nn]-\d{4}-[A-Z0-9.\-]+)",
+            r"Ref(?: No)?[:\s]*([A-Z0-9.\-]+)"
+        ]
+        for pattern in notice_patterns:
+            match = re.search(pattern, text_content, re.IGNORECASE)
+            if match:
+                record['Notice_ID'] = match.group(1).strip()
+                break
         
         # Store full text as clinical payload
-        record['Clinical_Payload'] = json.dumps({'text': text_content[:1000]})  # Limit size
-        record['Consent_Status'] = 'ACTIVE'
-        record['Notice_ID'] = Path(filepath).stem
+        record['Clinical_Payload'] = json.dumps({'text': text_content[:2000]})  # Increased limit
+        record['Consent_Status'] = 'ACTIVE' # Default
+        if 'Notice_ID' not in record:
+            record['Notice_ID'] = Path(filepath).stem
         
+        # Fallback for Patient Name
         if not record.get('Patient_Name'):
-            record['Patient_Name'] = 'Unknown'
+            record['Patient_Name'] = 'Unknown/Redacted'
         
         records.append(record)
         df = pd.DataFrame(records)
@@ -1483,45 +1525,68 @@ def parse_pdf(filepath: str) -> pd.DataFrame:
 
 
 def parse_text_report(filepath: str) -> pd.DataFrame:
-    """Parse text report file and extract structured data."""
+    """Parse text report file and extract structured data with robust logic."""
     try:
         with open(filepath, 'r', encoding='utf-8') as f:
-            lines = f.readlines()
+            text_content = f.read()
         
         records = []
         record = {}
         
-        # Common text report patterns
-        for line in lines:
-            line = line.strip()
-            if not line:
-                continue
-            
-            # Key-value patterns
-            if ':' in line:
-                key, value = line.split(':', 1)
-                key = key.strip().lower()
-                value = value.strip()
-                
-                if 'patient' in key and 'name' in key:
-                    record['Patient_Name'] = value
-                elif 'abha' in key or 'health id' in key:
-                    record['ABHA_ID'] = value
-                elif 'date' in key or 'notice date' in key:
-                    record['Notice_Date'] = value
-                elif 'notice' in key and 'id' in key:
-                    record['Notice_ID'] = value
-                elif 'consent' in key:
-                    record['Consent_Status'] = value.upper()
-            
-            # Store all text as clinical payload
-            if 'Clinical_Payload' not in record:
-                record['Clinical_Payload'] = []
-            record['Clinical_Payload'].append(line)
+        # Use common patterns similar to PDF for consistency
+        # 1. Patient Name
+        name_patterns = [
+            r"Patient(?:'s)? Name[:\s]*([A-Za-z0-9_\s.]{3,50})",
+            r"Name[:\s]*([A-Za-z0-9_\s.]{3,50})",
+            r"Pt\.? Name[:\s]*([A-Za-z0-9_\s.]{3,50})"
+        ]
+        for pattern in name_patterns:
+            match = re.search(pattern, text_content, re.IGNORECASE)
+            if match:
+                record['Patient_Name'] = match.group(1).strip().split('\n')[0]
+                break
         
-        # Convert clinical payload list to JSON string
-        if 'Clinical_Payload' in record and isinstance(record['Clinical_Payload'], list):
-            record['Clinical_Payload'] = json.dumps({'report': '\n'.join(record['Clinical_Payload'][:100])})
+        # 2. ABHA ID
+        abha_patterns = [
+            r"(?:ABHA|Health ID)(?:[:\s])*([0-9]{2}-?[0-9]{4}-?[0-9]{4}-?[0-9]{4})",
+            r"\b([0-9]{2}-[0-9]{4}-[0-9]{4}-[0-9]{4})\b",
+            r"\b([0-9]{14})\b"
+        ]
+        for pattern in abha_patterns:
+            match = re.search(pattern, text_content, re.IGNORECASE)
+            if match:
+                record['ABHA_ID'] = match.group(1).strip()
+                break
+        
+        # 3. Notice Date
+        date_patterns = [
+            r"Notice Date[:\s]*(\d{4}[-/]\d{2}[-/]\d{2})",
+            r"Date[:\s]*(\d{4}[-/]\d{2}[-/]\d{2})",
+            r"(\d{4}[-/]\d{2}[-/]\d{2})"
+        ]
+        for pattern in date_patterns:
+            match = re.search(pattern, text_content, re.IGNORECASE)
+            if match:
+                record['Notice_Date'] = match.group(1).replace('/', '-')
+                break
+        
+        # 4. Consent Status
+        consent_match = re.search(r"Consent(?: Status)?[:\s]*([A-Z]+)", text_content, re.IGNORECASE)
+        if consent_match:
+            record['Consent_Status'] = consent_match.group(1).upper()
+        else:
+            record['Consent_Status'] = 'ACTIVE'
+            
+        # 5. Notice ID
+        notice_match = re.search(r"Notice(?: ID)?[:\s]*([A-Z0-9.\-]+)", text_content, re.IGNORECASE)
+        if notice_match:
+            record['Notice_ID'] = notice_match.group(1).strip()
+        
+        if 'Notice_ID' not in record:
+            record['Notice_ID'] = Path(filepath).stem
+
+        # Store text as clinical payload
+        record['Clinical_Payload'] = json.dumps({'report': text_content[:2000]})
         
         # Set defaults
         if 'Consent_Status' not in record:
