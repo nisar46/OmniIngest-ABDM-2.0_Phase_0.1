@@ -291,11 +291,20 @@ if st.session_state.processed_df is not None:
     total = results["total"]
     
     st.subheader(f"📊 Analytics Dashboard - {st.session_state.detected_format or 'N/A'}")
+    
+    # Calculate percentages safely
+    if total > 0:
+        s_pct = (results['processed'] / total) * 100
+        p_pct = (results['purged'] / total) * 100
+        q_pct = (results['quarantined'] / total) * 100
+    else:
+        s_pct = p_pct = q_pct = 0.0
+
     m1, m2, m3, m4 = st.columns(4)
     m1.metric("Total", total)
-    m2.metric("Success", f"{results['processed']} ({(results['processed']/total*100):.1f}%)")
-    m3.metric("Purged", results['purged'], delta="-"+str(results["purged"]), delta_color="inverse")
-    m4.metric("Quarantined", results['quarantined'])
+    m2.metric("Success", f"{results['processed']} ({s_pct:.1f}%)")
+    m3.metric("Purged", f"{results['purged']} ({p_pct:.1f}%)", delta=f"-{results['purged']}", delta_color="inverse")
+    m4.metric("Quarantined", f"{results['quarantined']} ({q_pct:.1f}%)", delta=f"{results['quarantined']}", delta_color="off")
 
     st.markdown("### 💡 Insights")
     health_data = pd.DataFrame({"Status": ["Success", "Purged", "Quarantined"], "Count": [results["processed"], results["purged"], results["quarantined"]]}).set_index("Status")
