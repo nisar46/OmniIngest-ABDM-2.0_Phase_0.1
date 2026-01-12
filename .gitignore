@@ -48,10 +48,27 @@ temp_*
 .vscode/
 .idea/
 
-# Agent Artifacts
+# Agent Artifacts & Internal Notes
 .gemini/
 antigravity/
 implementation_plan.md
 walkthrough.md
 task.md
 PHASE_0.1_NOTES_DETAIL.md
+PHASE_0.1_DEEP_DIVE.md
+Phase_0.1_Report.md
+Phase_0.1_Scaffold_Notes.txt
+
+# Redundant Scaffolds & Test Scripts
+Phase0Scaffold.py
+organize_raw_data.py
+test_all_formats.py
+test_compliance_audit.py
+webhook_receiver.py
+database_manager.py
+abdm_api_client.py
+OmniIngest_Demo.ipynb
+
+# Databases
+*.db
+*.sqlite3

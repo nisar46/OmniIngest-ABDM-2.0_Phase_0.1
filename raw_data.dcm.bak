@@ -1,0 +1,600 @@
+(0010,0010) Patient Name: Patient_1_2507
+(0010,0020) Patient ID: 18-1094-2125-2463
+(0008,0020) Study Date: 20260112
+(0020,000D) Study Instance UID: N-2026-CONS-v1.8
+(0008,1030) Study Description: {"diagnosis": "Condition_1", "treatment": "Treatment_1", "visit_type": "IPD"}
+---
+(0010,0010) Patient Name: Patient_2_1846
+(0010,0020) Patient ID: 45-5090-5818-6145
+(0008,0020) Study Date: 20251222
+(0020,000D) Study Instance UID: N-2026-CONS-v1.6
+(0008,1030) Study Description: {"diagnosis": "Issue_2", "treatment": "Treatment_2", "visit_type": "EMERGENCY"}
+---
+(0010,0010) Patient Name: Patient_3_1774
+(0010,0020) Patient ID: 58-6582-4762-9590
+(0008,0020) Study Date: 20250207
+(0020,000D) Study Instance UID: N-2026-CONS-v1.0
+(0008,1030) Study Description: {"diagnosis": "Condition_3", "treatment": "Treatment_3", "visit_type": "EMERGENCY"}
+---
+(0010,0010) Patient Name: Patient_4_6983
+(0010,0020) Patient ID: 91-5789-1885-3286
+(0008,0020) Study Date: 20250512
+(0020,000D) Study Instance UID: N-2026-CONS-v1.7
+(0008,1030) Study Description: {"diagnosis": "Case_4", "treatment": "Treatment_4", "visit_type": "IPD"}
+---
+(0010,0010) Patient Name: Patient_5_8078
+(0010,0020) Patient ID: 71-2236-5553-5151
+(0008,0020) Study Date: 20250610
+(0020,000D) Study Instance UID: N-2026-CONS-v1.7
+(0008,1030) Study Description: {"diagnosis": "Condition_5", "treatment": "Treatment_5", "visit_type": "OPD"}
+---
+(0010,0010) Patient Name: Patient_6_2234
+(0010,0020) Patient ID: 60-7952-5592-3741
+(0008,0020) Study Date: 20251017
+(0020,000D) Study Instance UID: N-2026-CONS-v1.9
+(0008,1030) Study Description: {"diagnosis": "Condition_6", "treatment": "Treatment_6", "visit_type": "IPD"}
+---
+(0010,0010) Patient Name: Patient_7_7068
+(0010,0020) Patient ID: 30-6357-5723-5228
+(0008,0020) Study Date: 20251123
+(0020,000D) Study Instance UID: N-2026-CONS-v1.6
+(0008,1030) Study Description: {"diagnosis": "Condition_7", "treatment": "Treatment_7", "visit_type": "IPD"}
+---
+(0010,0010) Patient Name: Patient_8_3229
+(0010,0020) Patient ID: 86-6554-4749-5770
+(0008,0020) Study Date: 20251004
+(0020,000D) Study Instance UID: N-2026-CONS-v1.4
+(0008,1030) Study Description: {"diagnosis": "Case_8", "treatment": "Treatment_8", "visit_type": "EMERGENCY"}
+---
+(0010,0010) Patient Name: Patient_9_7044
+(0010,0020) Patient ID: 11-2790-1627-7018
+(0008,0020) Study Date: 20241126
+(0020,000D) Study Instance UID: N-2026-CONS-v1.1
+(0008,1030) Study Description: {"diagnosis": "Issue_9", "treatment": "Treatment_9", "visit_type": "EMERGENCY"}
+---
+(0010,0010) Patient Name: Patient_10_7595
+(0010,0020) Patient ID: 92-5721-5586-5017
+(0008,0020) Study Date: 20250121
+(0020,000D) Study Instance UID: N-2025-CONS-v1.4
+(0008,1030) Study Description: {"diagnosis": "Case_10", "treatment": "Treatment_10", "visit_type": "EMERGENCY"}
+---
+(0010,0010) Patient Name: Patient_11_2886
+(0010,0020) Patient ID: ABHA-624
+(0008,0020) Study Date: 20250209
+(0020,000D) Study Instance UID: N-2026-CONS-v1.3
+(0008,1030) Study Description: {"diagnosis": "Case_11", "treatment": "Treatment_11", "visit_type": "OPD"}
+---
+(0010,0010) Patient Name: Patient_12_7861
+(0010,0020) Patient ID: 46-7953-2507-2800
+(0008,0020) Study Date: 20251109
+(0020,000D) Study Instance UID: N-2026-CONS-v1.7
+(0008,1030) Study Description: {"diagnosis": "Case_12", "treatment": "Treatment_12", "visit_type": "EMERGENCY"}
+---
+(0010,0010) Patient Name: Patient_13_6157
+(0010,0020) Patient ID: 88-1243-9721-4617
+(0008,0020) Study Date: 20250430
+(0020,000D) Study Instance UID: N-2026-CONS-v1.9
+(0008,1030) Study Description: {"diagnosis": "Issue_13", "treatment": "Treatment_13", "visit_type": "OPD"}
+---
+(0010,0010) Patient Name: Patient_14_1889
+(0010,0020) Patient ID: 57-9598-3347-9765
+(0008,0020) Study Date: 20250331
+(0020,000D) Study Instance UID: N-2026-CONS-v1.4
+(0008,1030) Study Description: {"diagnosis": "Condition_14", "treatment": "Treatment_14", "visit_type": "OPD"}
+---
+(0010,0010) Patient Name: Patient_15_7459
+(0010,0020) Patient ID: None
+(0008,0020) Study Date: 20251213
+(0020,000D) Study Instance UID: N-2026-CONS-v1.5
+(0008,1030) Study Description: {"diagnosis": "Case_15", "treatment": "Treatment_15", "visit_type": "OPD"}
+---
+(0010,0010) Patient Name: Patient_16_5353
+(0010,0020) Patient ID: 41-1282-6927-8080
+(0008,0020) Study Date: 20250426
+(0020,000D) Study Instance UID: N-2026-CONS-v1.6
+(0008,1030) Study Description: {"diagnosis": "Condition_16", "treatment": "Treatment_16", "visit_type": "IPD"}
+---
+(0010,0010) Patient Name: Patient_17_1973
+(0010,0020) Patient ID: 23-4453-9409-3400
+(0008,0020) Study Date: 20251015
+(0020,000D) Study Instance UID: N-2026-CONS-v1.8
+(0008,1030) Study Description: {"diagnosis": "Issue_17", "treatment": "Treatment_17", "visit_type": "OPD"}
+---
+(0010,0010) Patient Name: Patient_18_3412
+(0010,0020) Patient ID: 52-2019-8989-6532
+(0008,0020) Study Date: 20250302
+(0020,000D) Study Instance UID: N-2026-CONS-v1.2
+(0008,1030) Study Description: {"diagnosis": "Issue_18", "treatment": "Treatment_18", "visit_type": "OPD"}
+---
+(0010,0010) Patient Name: Patient_19_7272
+(0010,0020) Patient ID: 72-1827-6753-4593
+(0008,0020) Study Date: 20241120
+(0020,000D) Study Instance UID: N-2026-CONS-v1.3
+(0008,1030) Study Description: {"diagnosis": "Issue_19", "treatment": "Treatment_19", "visit_type": "EMERGENCY"}
+---
+(0010,0010) Patient Name: Patient_20_2558
+(0010,0020) Patient ID: 23-1391-4717-8240
+(0008,0020) Study Date: 20250725
+(0020,000D) Study Instance UID: N-2026-CONS-v1.0
+(0008,1030) Study Description: {"diagnosis": "Condition_20", "treatment": "Treatment_20", "visit_type": "OPD"}
+---
+(0010,0010) Patient Name: Patient_21_8136
+(0010,0020) Patient ID: 51-4232-7288-3009
+(0008,0020) Study Date: 20250404
+(0020,000D) Study Instance UID: N-2026-CONS-v1.6
+(0008,1030) Study Description: {"diagnosis": "Condition_21", "treatment": "Treatment_21", "visit_type": "OPD"}
+---
+(0010,0010) Patient Name: Patient_22_8577
+(0010,0020) Patient ID: 67-9946-3268-5355
+(0008,0020) Study Date: 20250806
+(0020,000D) Study Instance UID: N-2026-CONS-v1.8
+(0008,1030) Study Description: {"diagnosis": "Case_22", "treatment": "Treatment_22", "visit_type": "IPD"}
+---
+(0010,0010) Patient Name: Patient_23_4794
+(0010,0020) Patient ID: ABHA-881
+(0008,0020) Study Date: 20250901
+(0020,000D) Study Instance UID: N-2026-CONS-v1.1
+(0008,1030) Study Description: {"diagnosis": "Issue_23", "treatment": "Treatment_23", "visit_type": "OPD"}
+---
+(0010,0010) Patient Name: Patient_24_8703
+(0010,0020) Patient ID: 21-3034-6476-9329
+(0008,0020) Study Date: 20251128
+(0020,000D) Study Instance UID: N-2026-CONS-v1.6
+(0008,1030) Study Description: {"diagnosis": "Condition_24", "treatment": "Treatment_24", "visit_type": "OPD"}
+---
+(0010,0010) Patient Name: Patient_25_9585
+(0010,0020) Patient ID: 34-5544-9921-3223
+(0008,0020) Study Date: 20251117
+(0020,000D) Study Instance UID: N-2026-CONS-v1.7
+(0008,1030) Study Description: {"diagnosis": "Condition_25", "treatment": "Treatment_25", "visit_type": "EMERGENCY"}
+---
+(0010,0010) Patient Name: Patient_26_3476
+(0010,0020) Patient ID: 97-9296-6805-5880
+(0008,0020) Study Date: 20250312
+(0020,000D) Study Instance UID: N-2026-CONS-v1.4
+(0008,1030) Study Description: {"diagnosis": "Case_26", "treatment": "Treatment_26", "visit_type": "OPD"}
+---
+(0010,0010) Patient Name: Patient_27_5942
+(0010,0020) Patient ID: 36-8756-9400-8866
+(0008,0020) Study Date: 20241101
+(0020,000D) Study Instance UID: N-2026-CONS-v1.6
+(0008,1030) Study Description: {"diagnosis": "Issue_27", "treatment": "Treatment_27", "visit_type": "EMERGENCY"}
+---
+(0010,0010) Patient Name: Patient_28_3869
+(0010,0020) Patient ID: 55-6826-6474-4089
+(0008,0020) Study Date: 20251228
+(0020,000D) Study Instance UID: N-2026-CONS-v1.0
+(0008,1030) Study Description: {"diagnosis": "Condition_28", "treatment": "Treatment_28", "visit_type": "EMERGENCY"}
+---
+(0010,0010) Patient Name: Patient_29_4937
+(0010,0020) Patient ID: 82-1277-6193-7743
+(0008,0020) Study Date: 20251223
+(0020,000D) Study Instance UID: N-2026-CONS-v1.0
+(0008,1030) Study Description: {"diagnosis": "Case_29", "treatment": "Treatment_29", "visit_type": "OPD"}
+---
+(0010,0010) Patient Name: Patient_30_7286
+(0010,0020) Patient ID: 48-1398-3124-9368
+(0008,0020) Study Date: 20250712
+(0020,000D) Study Instance UID: N-2026-CONS-v1.4
+(0008,1030) Study Description: {"diagnosis": "Condition_30", "treatment": "Treatment_30", "visit_type": "EMERGENCY"}
+---
+(0010,0010) Patient Name: Patient_31_1668
+(0010,0020) Patient ID: 37-5659-3879-5182
+(0008,0020) Study Date: 20250709
+(0020,000D) Study Instance UID: N-2026-CONS-v1.3
+(0008,1030) Study Description: {"diagnosis": "Condition_31", "treatment": "Treatment_31", "visit_type": "OPD"}
+---
+(0010,0010) Patient Name: Patient_32_2811
+(0010,0020) Patient ID: 58-2727-5594-8935
+(0008,0020) Study Date: 20250528
+(0020,000D) Study Instance UID: N-2026-CONS-v1.0
+(0008,1030) Study Description: {"diagnosis": "Case_32", "treatment": "Treatment_32", "visit_type": "IPD"}
+---
+(0010,0010) Patient Name: Patient_33_1561
+(0010,0020) Patient ID: 51-8369-5590-1299
+(0008,0020) Study Date: 20250805
+(0020,000D) Study Instance UID: N-2026-CONS-v1.1
+(0008,1030) Study Description: {"diagnosis": "Issue_33", "treatment": "Treatment_33", "visit_type": "OPD"}
+---
+(0010,0010) Patient Name: Patient_34_6956
+(0010,0020) Patient ID: 63-3529-3101-5609
+(0008,0020) Study Date: 20250614
+(0020,000D) Study Instance UID: N-2026-CONS-v1.0
+(0008,1030) Study Description: {"diagnosis": "Case_34", "treatment": "Treatment_34", "visit_type": "IPD"}
+---
+(0010,0010) Patient Name: Patient_35_5912
+(0010,0020) Patient ID: 71-8643-5881-7858
+(0008,0020) Study Date: 20241204
+(0020,000D) Study Instance UID: N-2026-CONS-v1.8
+(0008,1030) Study Description: {"diagnosis": "Condition_35", "treatment": "Treatment_35", "visit_type": "EMERGENCY"}
+---
+(0010,0010) Patient Name: Patient_36_1597
+(0010,0020) Patient ID: 54-9813-7754-9013
+(0008,0020) Study Date: 20251221
+(0020,000D) Study Instance UID: N-2026-CONS-v1.2
+(0008,1030) Study Description: {"diagnosis": "Case_36", "treatment": "Treatment_36", "visit_type": "EMERGENCY"}
+---
+(0010,0010) Patient Name: Patient_37_3789
+(0010,0020) Patient ID: 18-6784-9677-7219
+(0008,0020) Study Date: 20250315
+(0020,000D) Study Instance UID: N-2026-CONS-v1.3
+(0008,1030) Study Description: {"diagnosis": "Issue_37", "treatment": "Treatment_37", "visit_type": "IPD"}
+---
+(0010,0010) Patient Name: Patient_38_7244
+(0010,0020) Patient ID: 55-5504-6384-1232
+(0008,0020) Study Date: 20241210
+(0020,000D) Study Instance UID: N-2026-CONS-v1.1
+(0008,1030) Study Description: {"diagnosis": "Condition_38", "treatment": "Treatment_38", "visit_type": "IPD"}
+---
+(0010,0010) Patient Name: Patient_39_1208
+(0010,0020) Patient ID: 31-9442-1696-7369
+(0008,0020) Study Date: 20250709
+(0020,000D) Study Instance UID: N-2026-CONS-v1.2
+(0008,1030) Study Description: {"diagnosis": "Condition_39", "treatment": "Treatment_39", "visit_type": "OPD"}
+---
+(0010,0010) Patient Name: Patient_40_4854
+(0010,0020) Patient ID: 88-3254-6326-7821
+(0008,0020) Study Date: 20250513
+(0020,000D) Study Instance UID: N-2026-CONS-v1.1
+(0008,1030) Study Description: {"diagnosis": "Case_40", "treatment": "Treatment_40", "visit_type": "EMERGENCY"}
+---
+(0010,0010) Patient Name: Patient_41_8805
+(0010,0020) Patient ID: ABHA-422
+(0008,0020) Study Date: 20251223
+(0020,000D) Study Instance UID: N-2026-CONS-v1.6
+(0008,1030) Study Description: {"diagnosis": "Case_41", "treatment": "Treatment_41", "visit_type": "IPD"}
+---
+(0010,0010) Patient Name: Patient_42_7398
+(0010,0020) Patient ID: 57-8900-2253-7722
+(0008,0020) Study Date: 20251003
+(0020,000D) Study Instance UID: N-2026-CONS-v1.3
+(0008,1030) Study Description: {"diagnosis": "Issue_42", "treatment": "Treatment_42", "visit_type": "EMERGENCY"}
+---
+(0010,0010) Patient Name: Patient_43_4116
+(0010,0020) Patient ID: None
+(0008,0020) Study Date: 20241109
+(0020,000D) Study Instance UID: N-2026-CONS-v1.3
+(0008,1030) Study Description: {"diagnosis": "Case_43", "treatment": "Treatment_43", "visit_type": "IPD"}
+---
+(0010,0010) Patient Name: Patient_44_1828
+(0010,0020) Patient ID: 36-1031-6904-5843
+(0008,0020) Study Date: 20260110
+(0020,000D) Study Instance UID: N-2026-CONS-v1.0
+(0008,1030) Study Description: {"diagnosis": "Condition_44", "treatment": "Treatment_44", "visit_type": "IPD"}
+---
+(0010,0010) Patient Name: Patient_45_8012
+(0010,0020) Patient ID: 28-5969-3058-3772
+(0008,0020) Study Date: 20250911
+(0020,000D) Study Instance UID: N-2026-CONS-v1.7
+(0008,1030) Study Description: {"diagnosis": "Issue_45", "treatment": "Treatment_45", "visit_type": "IPD"}
+---
+(0010,0010) Patient Name: Patient_46_4766
+(0010,0020) Patient ID: 42-5062-1194-7187
+(0008,0020) Study Date: 20250220
+(0020,000D) Study Instance UID: N-2026-CONS-v1.7
+(0008,1030) Study Description: {"diagnosis": "Issue_46", "treatment": "Treatment_46", "visit_type": "EMERGENCY"}
+---
+(0010,0010) Patient Name: Patient_47_1324
+(0010,0020) Patient ID: 76-7386-1296-5944
+(0008,0020) Study Date: 20251224
+(0020,000D) Study Instance UID: N-2026-CONS-v1.5
+(0008,1030) Study Description: {"diagnosis": "Case_47", "treatment": "Treatment_47", "visit_type": "EMERGENCY"}
+---
+(0010,0010) Patient Name: Patient_48_5022
+(0010,0020) Patient ID: 13-4645-9785-3492
+(0008,0020) Study Date: 20241114
+(0020,000D) Study Instance UID: N-2025-CONS-v1.5
+(0008,1030) Study Description: {"diagnosis": "Issue_48", "treatment": "Treatment_48", "visit_type": "EMERGENCY"}
+---
+(0010,0010) Patient Name: Patient_49_9241
+(0010,0020) Patient ID: None
+(0008,0020) Study Date: 20250817
+(0020,000D) Study Instance UID: N-2026-CONS-v1.4
+(0008,1030) Study Description: {"diagnosis": "Condition_49", "treatment": "Treatment_49", "visit_type": "EMERGENCY"}
+---
+(0010,0010) Patient Name: Patient_50_9455
+(0010,0020) Patient ID: 25-9531-9940-8985
+(0008,0020) Study Date: 20251017
+(0020,000D) Study Instance UID: N-2026-CONS-v1.5
+(0008,1030) Study Description: {"diagnosis": "Condition_50", "treatment": "Treatment_50", "visit_type": "EMERGENCY"}
+---
+(0010,0010) Patient Name: Patient_51_2521
+(0010,0020) Patient ID: 32-7222-4040-8013
+(0008,0020) Study Date: 20250211
+(0020,000D) Study Instance UID: N-2026-CONS-v1.7
+(0008,1030) Study Description: {"diagnosis": "Case_51", "treatment": "Treatment_51", "visit_type": "IPD"}
+---
+(0010,0010) Patient Name: Patient_52_5319
+(0010,0020) Patient ID: 72-8549-4082-5119
+(0008,0020) Study Date: 20250224
+(0020,000D) Study Instance UID: N-2026-CONS-v1.2
+(0008,1030) Study Description: {"diagnosis": "Case_52", "treatment": "Treatment_52", "visit_type": "IPD"}
+---
+(0010,0010) Patient Name: Patient_53_2431
+(0010,0020) Patient ID: 74-5789-7770-7006
+(0008,0020) Study Date: 20251106
+(0020,000D) Study Instance UID: N-2026-CONS-v1.5
+(0008,1030) Study Description: {"diagnosis": "Condition_53", "treatment": "Treatment_53", "visit_type": "OPD"}
+---
+(0010,0010) Patient Name: Patient_54_5383
+(0010,0020) Patient ID: 48-6840-4443-8585
+(0008,0020) Study Date: 20250209
+(0020,000D) Study Instance UID: N-2026-CONS-v1.3
+(0008,1030) Study Description: {"diagnosis": "Issue_54", "treatment": "Treatment_54", "visit_type": "EMERGENCY"}
+---
+(0010,0010) Patient Name: Patient_55_1012
+(0010,0020) Patient ID: 30-7033-6332-9066
+(0008,0020) Study Date: 20250319
+(0020,000D) Study Instance UID: N-2026-CONS-v1.7
+(0008,1030) Study Description: {"diagnosis": "Case_55", "treatment": "Treatment_55", "visit_type": "IPD"}
+---
+(0010,0010) Patient Name: Patient_56_3940
+(0010,0020) Patient ID: 90-5435-2223-2807
+(0008,0020) Study Date: 20241030
+(0020,000D) Study Instance UID: N-2026-CONS-v1.2
+(0008,1030) Study Description: {"diagnosis": "Case_56", "treatment": "Treatment_56", "visit_type": "OPD"}
+---
+(0010,0010) Patient Name: Patient_57_3013
+(0010,0020) Patient ID: 70-6575-5782-1533
+(0008,0020) Study Date: 20241228
+(0020,000D) Study Instance UID: N-2026-CONS-v1.1
+(0008,1030) Study Description: {"diagnosis": "Condition_57", "treatment": "Treatment_57", "visit_type": "IPD"}
+---
+(0010,0010) Patient Name: Patient_58_2982
+(0010,0020) Patient ID: 70-2076-4158-9758
+(0008,0020) Study Date: 20251224
+(0020,000D) Study Instance UID: N-2025-CONS-v1.3
+(0008,1030) Study Description: {"diagnosis": "Case_58", "treatment": "Treatment_58", "visit_type": "IPD"}
+---
+(0010,0010) Patient Name: Patient_59_5452
+(0010,0020) Patient ID: 63-3878-4618-8139
+(0008,0020) Study Date: 20250521
+(0020,000D) Study Instance UID: N-2026-CONS-v1.7
+(0008,1030) Study Description: {"diagnosis": "Condition_59", "treatment": "Treatment_59", "visit_type": "OPD"}
+---
+(0010,0010) Patient Name: Patient_60_7459
+(0010,0020) Patient ID: 39-7440-5505-4839
+(0008,0020) Study Date: 20251208
+(0020,000D) Study Instance UID: N-2026-CONS-v1.6
+(0008,1030) Study Description: {"diagnosis": "Case_60", "treatment": "Treatment_60", "visit_type": "IPD"}
+---
+(0010,0010) Patient Name: Patient_61_4228
+(0010,0020) Patient ID: 98-8703-8860-8303
+(0008,0020) Study Date: 20251108
+(0020,000D) Study Instance UID: N-2026-CONS-v1.9
+(0008,1030) Study Description: {"diagnosis": "Case_61", "treatment": "Treatment_61", "visit_type": "EMERGENCY"}
+---
+(0010,0010) Patient Name: Patient_62_1419
+(0010,0020) Patient ID: 72-2805-7417-6904
+(0008,0020) Study Date: 20250212
+(0020,000D) Study Instance UID: N-2026-CONS-v1.1
+(0008,1030) Study Description: {"diagnosis": "Condition_62", "treatment": "Treatment_62", "visit_type": "OPD"}
+---
+(0010,0010) Patient Name: Patient_63_4956
+(0010,0020) Patient ID: 85-2783-5853-8832
+(0008,0020) Study Date: 20251024
+(0020,000D) Study Instance UID: N-2026-CONS-v1.9
+(0008,1030) Study Description: {"diagnosis": "Condition_63", "treatment": "Treatment_63", "visit_type": "IPD"}
+---
+(0010,0010) Patient Name: Patient_64_3939
+(0010,0020) Patient ID: 72-6279-3844-8901
+(0008,0020) Study Date: 20250831
+(0020,000D) Study Instance UID: N-2026-CONS-v1.6
+(0008,1030) Study Description: {"diagnosis": "Condition_64", "treatment": "Treatment_64", "visit_type": "EMERGENCY"}
+---
+(0010,0010) Patient Name: Patient_65_2508
+(0010,0020) Patient ID: 36-2899-6298-9499
+(0008,0020) Study Date: 20250920
+(0020,000D) Study Instance UID: N-2025-CONS-v1.4
+(0008,1030) Study Description: {"diagnosis": "Condition_65", "treatment": "Treatment_65", "visit_type": "IPD"}
+---
+(0010,0010) Patient Name: Patient_66_3779
+(0010,0020) Patient ID: 47-6173-3712-3967
+(0008,0020) Study Date: 20251113
+(0020,000D) Study Instance UID: N-2026-CONS-v1.8
+(0008,1030) Study Description: {"diagnosis": "Case_66", "treatment": "Treatment_66", "visit_type": "OPD"}
+---
+(0010,0010) Patient Name: Patient_67_3343
+(0010,0020) Patient ID: 44-1218-3783-4795
+(0008,0020) Study Date: 20250112
+(0020,000D) Study Instance UID: N-2026-CONS-v1.3
+(0008,1030) Study Description: {"diagnosis": "Condition_67", "treatment": "Treatment_67", "visit_type": "IPD"}
+---
+(0010,0010) Patient Name: Patient_68_3157
+(0010,0020) Patient ID: 63-3794-3284-4736
+(0008,0020) Study Date: 20250516
+(0020,000D) Study Instance UID: N-2026-CONS-v1.2
+(0008,1030) Study Description: {"diagnosis": "Issue_68", "treatment": "Treatment_68", "visit_type": "IPD"}
+---
+(0010,0010) Patient Name: Patient_69_9923
+(0010,0020) Patient ID: 35-7373-1659-5785
+(0008,0020) Study Date: 20250717
+(0020,000D) Study Instance UID: N-2026-CONS-v1.5
+(0008,1030) Study Description: {"diagnosis": "Issue_69", "treatment": "Treatment_69", "visit_type": "OPD"}
+---
+(0010,0010) Patient Name: Patient_70_9917
+(0010,0020) Patient ID: 35-5312-6936-3569
+(0008,0020) Study Date: 20250719
+(0020,000D) Study Instance UID: N-2026-CONS-v1.1
+(0008,1030) Study Description: {"diagnosis": "Condition_70", "treatment": "Treatment_70", "visit_type": "EMERGENCY"}
+---
+(0010,0010) Patient Name: Patient_71_7492
+(0010,0020) Patient ID: 60-2035-6147-5727
+(0008,0020) Study Date: 20250715
+(0020,000D) Study Instance UID: N-2026-CONS-v1.2
+(0008,1030) Study Description: {"diagnosis": "Case_71", "treatment": "Treatment_71", "visit_type": "OPD"}
+---
+(0010,0010) Patient Name: Patient_72_6709
+(0010,0020) Patient ID: 25-7350-9343-1753
+(0008,0020) Study Date: 20250513
+(0020,000D) Study Instance UID: N-2026-CONS-v1.9
+(0008,1030) Study Description: {"diagnosis": "Condition_72", "treatment": "Treatment_72", "visit_type": "IPD"}
+---
+(0010,0010) Patient Name: Patient_73_3868
+(0010,0020) Patient ID: 71-8004-1451-3728
+(0008,0020) Study Date: 20241031
+(0020,000D) Study Instance UID: N-2026-CONS-v1.2
+(0008,1030) Study Description: {"diagnosis": "Condition_73", "treatment": "Treatment_73", "visit_type": "OPD"}
+---
+(0010,0010) Patient Name: Patient_74_3942
+(0010,0020) Patient ID: 46-2125-2621-4712
+(0008,0020) Study Date: 20251121
+(0020,000D) Study Instance UID: N-2026-CONS-v1.3
+(0008,1030) Study Description: {"diagnosis": "Case_74", "treatment": "Treatment_74", "visit_type": "EMERGENCY"}
+---
+(0010,0010) Patient Name: Patient_75_2321
+(0010,0020) Patient ID: 57-4026-1066-4448
+(0008,0020) Study Date: 20250514
+(0020,000D) Study Instance UID: N-2026-CONS-v1.8
+(0008,1030) Study Description: {"diagnosis": "Issue_75", "treatment": "Treatment_75", "visit_type": "EMERGENCY"}
+---
+(0010,0010) Patient Name: Patient_76_6542
+(0010,0020) Patient ID: 43-3291-5057-3649
+(0008,0020) Study Date: 20251129
+(0020,000D) Study Instance UID: N-2026-CONS-v1.4
+(0008,1030) Study Description: {"diagnosis": "Condition_76", "treatment": "Treatment_76", "visit_type": "EMERGENCY"}
+---
+(0010,0010) Patient Name: Patient_77_2368
+(0010,0020) Patient ID: 58-1046-6711-9587
+(0008,0020) Study Date: 20241125
+(0020,000D) Study Instance UID: N-2025-CONS-v1.7
+(0008,1030) Study Description: {"diagnosis": "Condition_77", "treatment": "Treatment_77", "visit_type": "IPD"}
+---
+(0010,0010) Patient Name: Patient_78_9268
+(0010,0020) Patient ID: 32-3440-9233-6990
+(0008,0020) Study Date: 20250411
+(0020,000D) Study Instance UID: N-2026-CONS-v1.5
+(0008,1030) Study Description: {"diagnosis": "Case_78", "treatment": "Treatment_78", "visit_type": "IPD"}
+---
+(0010,0010) Patient Name: Patient_79_4432
+(0010,0020) Patient ID: 43-3658-6616-3504
+(0008,0020) Study Date: 20250925
+(0020,000D) Study Instance UID: N-2026-CONS-v1.5
+(0008,1030) Study Description: {"diagnosis": "Issue_79", "treatment": "Treatment_79", "visit_type": "IPD"}
+---
+(0010,0010) Patient Name: Patient_80_9444
+(0010,0020) Patient ID: 76-1947-9818-1549
+(0008,0020) Study Date: 20251219
+(0020,000D) Study Instance UID: N-2026-CONS-v1.5
+(0008,1030) Study Description: {"diagnosis": "Issue_80", "treatment": "Treatment_80", "visit_type": "OPD"}
+---
+(0010,0010) Patient Name: Patient_81_3762
+(0010,0020) Patient ID: 46-1427-9480-9258
+(0008,0020) Study Date: 20241201
+(0020,000D) Study Instance UID: N-2026-CONS-v1.8
+(0008,1030) Study Description: {"diagnosis": "Issue_81", "treatment": "Treatment_81", "visit_type": "IPD"}
+---
+(0010,0010) Patient Name: Patient_82_3600
+(0010,0020) Patient ID: None
+(0008,0020) Study Date: 20250524
+(0020,000D) Study Instance UID: N-2026-CONS-v1.2
+(0008,1030) Study Description: {"diagnosis": "Case_82", "treatment": "Treatment_82", "visit_type": "EMERGENCY"}
+---
+(0010,0010) Patient Name: Patient_83_1472
+(0010,0020) Patient ID: 71-8418-4077-5393
+(0008,0020) Study Date: 20250124
+(0020,000D) Study Instance UID: N-2026-CONS-v1.5
+(0008,1030) Study Description: {"diagnosis": "Condition_83", "treatment": "Treatment_83", "visit_type": "OPD"}
+---
+(0010,0010) Patient Name: Patient_84_7742
+(0010,0020) Patient ID: 65-6034-6872-8751
+(0008,0020) Study Date: 20250904
+(0020,000D) Study Instance UID: N-2026-CONS-v1.6
+(0008,1030) Study Description: {"diagnosis": "Case_84", "treatment": "Treatment_84", "visit_type": "IPD"}
+---
+(0010,0010) Patient Name: Patient_85_2233
+(0010,0020) Patient ID: 49-6579-5977-9005
+(0008,0020) Study Date: 20241205
+(0020,000D) Study Instance UID: N-2026-CONS-v1.5
+(0008,1030) Study Description: {"diagnosis": "Condition_85", "treatment": "Treatment_85", "visit_type": "OPD"}
+---
+(0010,0010) Patient Name: Patient_86_4768
+(0010,0020) Patient ID: 89-4651-4920-2986
+(0008,0020) Study Date: 20250216
+(0020,000D) Study Instance UID: N-2026-CONS-v1.7
+(0008,1030) Study Description: {"diagnosis": "Issue_86", "treatment": "Treatment_86", "visit_type": "OPD"}
+---
+(0010,0010) Patient Name: Patient_87_5211
+(0010,0020) Patient ID: 82-6070-7131-3194
+(0008,0020) Study Date: 20260102
+(0020,000D) Study Instance UID: N-2026-CONS-v1.3
+(0008,1030) Study Description: {"diagnosis": "Issue_87", "treatment": "Treatment_87", "visit_type": "OPD"}
+---
+(0010,0010) Patient Name: Patient_88_4140
+(0010,0020) Patient ID: 16-1508-9770-8984
+(0008,0020) Study Date: 20250605
+(0020,000D) Study Instance UID: N-2026-CONS-v1.2
+(0008,1030) Study Description: {"diagnosis": "Condition_88", "treatment": "Treatment_88", "visit_type": "EMERGENCY"}
+---
+(0010,0010) Patient Name: Patient_89_6304
+(0010,0020) Patient ID: 19-3505-5043-4389
+(0008,0020) Study Date: 20250520
+(0020,000D) Study Instance UID: N-2026-CONS-v1.0
+(0008,1030) Study Description: {"diagnosis": "Case_89", "treatment": "Treatment_89", "visit_type": "EMERGENCY"}
+---
+(0010,0010) Patient Name: Patient_90_6983
+(0010,0020) Patient ID: 48-9141-9497-9784
+(0008,0020) Study Date: 20251011
+(0020,000D) Study Instance UID: N-2026-CONS-v1.2
+(0008,1030) Study Description: {"diagnosis": "Case_90", "treatment": "Treatment_90", "visit_type": "IPD"}
+---
+(0010,0010) Patient Name: Patient_91_2057
+(0010,0020) Patient ID: 41-8052-1277-3000
+(0008,0020) Study Date: 20260106
+(0020,000D) Study Instance UID: N-2025-CONS-v1.3
+(0008,1030) Study Description: {"diagnosis": "Issue_91", "treatment": "Treatment_91", "visit_type": "IPD"}
+---
+(0010,0010) Patient Name: Patient_92_2727
+(0010,0020) Patient ID: None
+(0008,0020) Study Date: 20250516
+(0020,000D) Study Instance UID: N-2026-CONS-v1.3
+(0008,1030) Study Description: {"diagnosis": "Case_92", "treatment": "Treatment_92", "visit_type": "OPD"}
+---
+(0010,0010) Patient Name: Patient_93_9341
+(0010,0020) Patient ID: 83-3628-5687-7785
+(0008,0020) Study Date: 20260108
+(0020,000D) Study Instance UID: N-2026-CONS-v1.3
+(0008,1030) Study Description: {"diagnosis": "Condition_93", "treatment": "Treatment_93", "visit_type": "IPD"}
+---
+(0010,0010) Patient Name: Patient_94_7878
+(0010,0020) Patient ID: 80-8822-6701-1912
+(0008,0020) Study Date: 20241025
+(0020,000D) Study Instance UID: N-2026-CONS-v1.2
+(0008,1030) Study Description: {"diagnosis": "Case_94", "treatment": "Treatment_94", "visit_type": "IPD"}
+---
+(0010,0010) Patient Name: Patient_95_9854
+(0010,0020) Patient ID: 88-7152-3400-8665
+(0008,0020) Study Date: 20250122
+(0020,000D) Study Instance UID: N-2026-CONS-v1.4
+(0008,1030) Study Description: {"diagnosis": "Condition_95", "treatment": "Treatment_95", "visit_type": "OPD"}
+---
+(0010,0010) Patient Name: Patient_96_9039
+(0010,0020) Patient ID: 50-3716-1714-1530
+(0008,0020) Study Date: 20241217
+(0020,000D) Study Instance UID: N-2026-CONS-v1.1
+(0008,1030) Study Description: {"diagnosis": "Case_96", "treatment": "Treatment_96", "visit_type": "IPD"}
+---
+(0010,0010) Patient Name: Patient_97_1621
+(0010,0020) Patient ID: 35-3069-4393-3058
+(0008,0020) Study Date: 20241218
+(0020,000D) Study Instance UID: N-2026-CONS-v1.9
+(0008,1030) Study Description: {"diagnosis": "Case_97", "treatment": "Treatment_97", "visit_type": "OPD"}
+---
+(0010,0010) Patient Name: Patient_98_8124
+(0010,0020) Patient ID: 79-1019-1728-9728
+(0008,0020) Study Date: 20250612
+(0020,000D) Study Instance UID: N-2026-CONS-v1.4
+(0008,1030) Study Description: {"diagnosis": "Case_98", "treatment": "Treatment_98", "visit_type": "OPD"}
+---
+(0010,0010) Patient Name: Patient_99_6482
+(0010,0020) Patient ID: ABHA-869
+(0008,0020) Study Date: 20251217
+(0020,000D) Study Instance UID: N-2026-CONS-v1.0
+(0008,1030) Study Description: {"diagnosis": "Condition_99", "treatment": "Treatment_99", "visit_type": "OPD"}
+---
+(0010,0010) Patient Name: Patient_100_3099
+(0010,0020) Patient ID: 10-2899-6369-9083
+(0008,0020) Study Date: 20241028
+(0020,000D) Study Instance UID: N-2026-CONS-v1.1
+(0008,1030) Study Description: {"diagnosis": "Issue_100", "treatment": "Treatment_100", "visit_type": "EMERGENCY"}
+---
