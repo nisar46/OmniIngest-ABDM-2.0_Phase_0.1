@@ -14,7 +14,9 @@ OmniIngest ABDM 2.0 is a high-performance, interactive data ingestion layer desi
 Phase 0.1 features a premium, health-tech focused UI inspired by the minimalist and efficient design of ChatGPT.
 - **Dark Mode by Default**: Optimized for clinical environments to reduce eye strain.
 - **Glowing Teal Aesthetics**: A modern, high-contrast palette that feels like "The Future of Health."
+- **Glowing Teal Aesthetics**: A modern, high-contrast palette that feels like "The Future of Health."
 - **Glassmorphism Metrics**: Clean, elevated cards for real-time compliance tracking.
+- **Intelligent Sidebar**: A persistent control center containing the **"Sandbox Mode"** toggle for instant dummy data generation and system testing.
 
 ---
 
@@ -59,8 +61,12 @@ The core strength of this code is its **Resilience**. Unlike traditional parsers
    ```
 3. Launch the Bedrock dashboard:
    ```bash
+   ```bash
    streamlit run app.py
    ```
+4. **Explore**: 
+   - Upload your own clinical files (CSV, PDF, HL7, etc.).
+   - OR toggle **"Sandbox Mode"** in the sidebar to generate 1,000+ synthetic patient records instantly.
 
 ---
 
