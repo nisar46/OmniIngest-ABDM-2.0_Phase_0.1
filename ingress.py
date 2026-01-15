@@ -215,7 +215,12 @@ def run_audit(df, label, return_results=False):
     res["quarantine_reasons"] = {r["Status_Reason"]: r["count"] for r in res["quarantine_reasons"]}
     
     if return_results: return res
-    print(f"Audit for {label}: Total={res['total']}, OK={res['processed']}, PURGED={res['purged']}, QUARANTINE={res['quarantined']}")
+    
+    # Architect Note: We redact raw counts in production logs to prevent 'inference attacks' on small cohorts.
+    def redact_log(msg):
+        return f"[REDACTED_PII] {msg}"
+        
+    print(redact_log(f"Audit for {label}: Total={res['total']}, OK={res['processed']}, PURGED={res['purged']}, QUARANTINE={res['quarantined']}"))
 
 def erase_pii_for_revocation(df):
     """
