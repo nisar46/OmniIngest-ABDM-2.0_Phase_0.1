@@ -51,7 +51,8 @@ This project is engineered to align with:
 - **NRCeS**: Adopts the latest National Resource Centre for EHR Standards recommendations.
 - **DPDP Act 2023**: Hard-coded strict adherence to Data Principal rights (Right to Erasure).
 
-👉 *See [docs/COMPLIANCE.md](docs/COMPLIANCE.md) for a deep dive.*
+👉 *See [docs/COMPLIANCE.md](docs/COMPLIANCE.md) for a deep dive.*  
+👉 *See [docs/TECH_STACK.md](docs/TECH_STACK.md) for architecture details.*
 
 ---
 
