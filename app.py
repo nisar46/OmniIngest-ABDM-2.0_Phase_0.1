@@ -534,10 +534,13 @@ if st.session_state.processed_df is not None:
                 time.sleep(0.9)
                 
                 # Step 2
-                msg2 = f"[2/3] Overwriting PII Memory Blocks with Zero-Fill Pattern..."
-                st.session_state.governance_logs.append(f"{datetime.now().strftime('%H:%M:%S')} {msg2}")
+                from compliance_engine import PIIVault
+                vault = PIIVault()
+                crypto_log = vault.shred_keys() # [RULE 8.3 AUDIT]
+                
+                st.session_state.governance_logs.append(f"{datetime.now().strftime('%H:%M:%S')} {crypto_log}")
                 log_placeholder.code("\n".join(st.session_state.governance_logs), language="bash")
-                time.sleep(0.9)
+                time.sleep(1.2)
                 
                 # Step 3
                 msg3 = f"[3/3] SUCCESS: Record Purged. Audit ID: [{audit_id}]"
