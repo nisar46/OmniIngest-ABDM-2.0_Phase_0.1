@@ -12,6 +12,7 @@ COLUMN_MAPPING = {
     "Health_ID": "ABHA_ID",
     "ABHA": "ABHA_ID",
     "ABHA_No": "ABHA_ID",
+    "ABHA Number": "ABHA_ID", # Added per request
     
     # Patient_Name Synonyms
     "Patient_Name": "Patient_Name",
@@ -148,7 +149,7 @@ def run_ingress(file_path: str, autofill: bool = False):
 
     # 2. Universal Field Recovery (Zero-Failure)
     df = q.collect()
-    abha_pat = r'\b\d{2}[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{4}\b'
+    abha_pat = r'\b(?:\d{2}[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{4}|[a-zA-Z0-9.]+@sbx)\b'
     name_pat = r'(?:Patient Name|Pt Name|Patient|Name|Name of Pt)[:\s_-]*([A-Z][a-z]+(?:[\s_-][A-Z][a-z]+)*)'
     
     def recover(row):
@@ -175,7 +176,7 @@ def run_ingress(file_path: str, autofill: bool = False):
     
     # Audit statuses
     df = df.with_columns([
-        pl.when(pl.col("ABHA_ID").is_null() | (pl.col("ABHA_ID") == "") | (pl.col("ABHA_ID").str.contains(r"^[0-9]{2}-[0-9]{4}-[0-9]{4}-[0-9]{4}$").not_()))
+        pl.when(pl.col("ABHA_ID").is_null() | (pl.col("ABHA_ID") == "") | (pl.col("ABHA_ID").str.contains(r"^([0-9]{2}-[0-9]{4}-[0-9]{4}-[0-9]{4}|[a-zA-Z0-9.]+@sbx)$").not_()))
         .then(pl.lit("QUARANTINED"))
         .when(pl.col("Consent_Status") == "REVOKED")
         .then(pl.lit("PURGED"))
@@ -188,7 +189,7 @@ def run_ingress(file_path: str, autofill: bool = False):
         
         pl.when(pl.col("ABHA_ID").is_null() | (pl.col("ABHA_ID") == ""))
         .then(pl.lit("MISSING_ABHA"))
-        .when(pl.col("ABHA_ID").str.contains(r"^[0-9]{2}-[0-9]{4}-[0-9]{4}-[0-9]{4}$").not_())
+        .when(pl.col("ABHA_ID").str.contains(r"^([0-9]{2}-[0-9]{4}-[0-9]{4}-[0-9]{4}|[a-zA-Z0-9.]+@sbx)$").not_())
         .then(pl.lit("MALFORMED_ID"))
         .when(pl.col("Consent_Status") == "REVOKED")
         .then(pl.lit("CONSENT_REVOKED"))
@@ -217,8 +218,42 @@ def run_audit(df, label, return_results=False):
     print(f"Audit for {label}: Total={res['total']}, OK={res['processed']}, PURGED={res['purged']}, QUARANTINE={res['quarantined']}")
 
 def erase_pii_for_revocation(df):
-    """DPDP Rule 8 Kill-Switch."""
-    return df.with_columns([
-        pl.when(pl.col("Consent_Status") == "REVOKED").then(pl.lit("REDACTED")).otherwise(pl.col("Patient_Name")).alias("Patient_Name"),
-        pl.when(pl.col("Consent_Status") == "REVOKED").then(pl.lit("REDACTED")).otherwise(pl.col("ABHA_ID")).alias("ABHA_ID")
-    ])
+    """
+    DPDP Rule 8 Kill-Switch.
+    Replaces PII in Patient_Name and ABHA_ID with [DATA PURGED] for REVOKED records.
+    Robust against missing columns.
+    """
+    cols_to_purge = ["Patient_Name", "ABHA_ID"]
+    current_cols = df.columns
+    
+    exprs = []
+    
+    for col_name in cols_to_purge:
+        if col_name in current_cols:
+            exprs.append(
+                pl.when(pl.col("Consent_Status") == "REVOKED")
+                .then(pl.lit("[DATA PURGED]"))
+                .otherwise(pl.col(col_name))
+                .alias(col_name)
+            )
+            
+    # CRITICAL: Also update status for Audit Graph
+    if "Ingest_Status" in current_cols:
+         exprs.append(
+            pl.when(pl.col("Consent_Status") == "REVOKED")
+            .then(pl.lit("PURGED"))
+            .otherwise(pl.col("Ingest_Status"))
+            .alias("Ingest_Status")
+         )
+         
+    if "Status_Reason" in current_cols:
+         exprs.append(
+            pl.when(pl.col("Consent_Status") == "REVOKED")
+            .then(pl.lit("CONSENT_REVOKED"))
+            .otherwise(pl.col("Status_Reason"))
+            .alias("Status_Reason")
+         )
+    
+    if exprs:
+        return df.with_columns(exprs)
+    return df
