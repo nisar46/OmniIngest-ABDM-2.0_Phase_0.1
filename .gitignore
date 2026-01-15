@@ -46,6 +46,10 @@ raw_data.*
 # Exception for docs
 !docs/*.pdf
 
+# Media (Keep WebM for Repo, Ignore MP4 for LinkedIn)
+OmniIngest_Demo_2026.mp4
+
+
 # OS Specific
 .DS_Store
 Thumbs.db

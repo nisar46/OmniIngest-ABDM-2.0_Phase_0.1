@@ -3,7 +3,7 @@ import pandas as pd
 import polars as pl
 import os
 from src import ingress
-import create_sample_data
+from src.utils import sample_generator
 from datetime import datetime
 import uuid
 import csv
@@ -292,7 +292,7 @@ is_sandbox = st.sidebar.toggle("🛠️ Sandbox Mode", value=(st.session_state.d
 if is_sandbox and st.session_state.data_source != "DUMMY":
     st.session_state.data_source = "DUMMY"
     with st.spinner("Building test environment..."):
-        create_sample_data.main()
+        sample_generator.main()
         st.session_state.processed_df = ingress.run_ingress("raw_data.csv")
         st.session_state.mapping_confirmed = True
         st.session_state.detected_format = ingress.detect_format("raw_data.csv")
