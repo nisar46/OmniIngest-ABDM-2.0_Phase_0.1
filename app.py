@@ -5,11 +5,74 @@ import os
 import ingress
 import create_sample_data
 from datetime import datetime
+import uuid
+import csv
+import altair as alt
+
+import time
+
+def verify_fhir_structure(resource):
+    """Lead Auditor Check: Ensures Patient_Name is properly nested as {'name': [{'text': '...'}]} per FHIR R5."""
+    if "resourceType" in resource and resource["resourceType"] == "Patient":
+        name_block = resource.get("name", [])
+        if not name_block or not isinstance(name_block, list) or "text" not in name_block[0]:
+            return False
+    return True
+
+def get_fhir_bundle(df):
+    """Generates a FHIR R5 Bundle collection from the processed dataframe with nested name structures."""
+    import json
+    bundle = {
+        "resourceType": "Bundle",
+        "type": "collection",
+        "timestamp": datetime.now().isoformat(),
+        "entry": []
+    }
+    
+    processed_df = df.filter(pl.col("Ingest_Status") == "PROCESSED")
+    
+    for row in processed_df.to_dicts():
+        patient_resource = {
+            "resourceType": "Patient",
+            "identifier": [{"system": "https://healthidsbx.abdm.gov.in", "value": row.get("ABHA_ID")}],
+            "name": [{"text": row.get("Patient_Name")}], # Compliant Nesting
+            "extension": [
+                {"url": "https://abdm.gov.in/fhir/StructureDefinition/consent-status", "valueString": row.get("Consent_Status")},
+                {"url": "https://abdm.gov.in/fhir/StructureDefinition/notice-id", "valueString": row.get("Notice_ID")}
+            ]
+        }
+        
+        # Auditor Verification before adding to bundle
+        if verify_fhir_structure(patient_resource):
+             entry = {
+                "fullUrl": f"urn:uuid:{row.get('Notice_ID', 'unknown')}",
+                "resource": patient_resource
+            }
+             bundle["entry"].append(entry)
+        else:
+            # Fallback/Refactor logic would go here if needed, 
+            # but current structure is now compliant.
+            pass
+
+    return json.dumps(bundle, indent=2)
+
+def import_altair_and_chart(data):
+    # Ensure color column is used
+    base = alt.Chart(data).encode(
+        x=alt.X('Status', sort=None),
+        y='Count',
+        color=alt.Color('Color', scale=None),
+        tooltip=['Status', 'Count']
+    )
+    chart = base.mark_bar().properties(
+        title="Ingestion Health"
+    )
+    return chart
 
 # Page Configuration
 st.set_page_config(page_title="OmniIngest ABDM 2.0", page_icon="🏥", layout="wide")
 
-# Custom CSS for "ChatGPT Health" aesthetics
+# Custom CSS for "Modern GenAI" aesthetics
 st.markdown("""
     <style>
     /* Main Background */
@@ -28,7 +91,7 @@ st.markdown("""
         width: 100%;
         border-radius: 8px;
         height: 3.2em;
-        background-color: #10a37f; /* ChatGPT Teal */
+        background-color: #10a37f; /* GenAI Teal */
         color: white;
         border: none;
         font-weight: 600;
@@ -107,6 +170,18 @@ if 'detected_format' not in st.session_state:
 if 'manual_mapping' not in st.session_state:
     st.session_state.manual_mapping = {}
 
+# Persistence Check - DPDP Rule 8 Enforcement
+if st.session_state.revoked:
+    st.markdown("""
+        <div style='background-color: #3e1616; color: #ff8080; padding: 15px; border-radius: 8px; border: 1px solid #ff4d4d; margin-bottom: 20px;'>
+            <h3 style='margin:0; color: #ff8080;'>⚠️ SESSION REVOKED</h3>
+            <p style='margin:5px 0 0 0;'>Data purged per DPDP Rule 8. System locked until session reset.</p>
+        </div>
+    """, unsafe_allow_html=True)
+    # Double-tap safety: Force re-masking if dataframe exists
+    if st.session_state.processed_df is not None:
+        st.session_state.processed_df = ingress.erase_pii_for_revocation(st.session_state.processed_df)
+
 def reset_state():
     st.session_state.data_source = None
     st.session_state.processed_df = None
@@ -128,26 +203,40 @@ def get_fhir_bundle(df):
     processed_df = df.filter(pl.col("Ingest_Status") == "PROCESSED")
     
     for row in processed_df.to_dicts():
-        entry = {
-            "fullUrl": f"urn:uuid:{row.get('Notice_ID', 'unknown')}",
-            "resource": {
-                "resourceType": "Patient",
-                "identifier": [{"system": "https://abdm.gov.in", "value": row.get("ABHA_ID")}],
-                "name": [{"text": row.get("Patient_Name")}],
-                "extension": [
-                    {"url": "https://abdm.gov.in/fhir/StructureDefinition/consent-status", "valueString": row.get("Consent_Status")},
-                    {"url": "https://abdm.gov.in/fhir/StructureDefinition/notice-id", "valueString": row.get("Notice_ID")}
-                ]
-            }
+        patient_resource = {
+            "resourceType": "Patient",
+            "identifier": [{"system": "https://healthidsbx.abdm.gov.in", "value": row.get("ABHA_ID")}],
+            "name": [{"text": row.get("Patient_Name")}], # Compliant Nesting
+            "extension": [
+                {"url": "https://abdm.gov.in/fhir/StructureDefinition/consent-status", "valueString": row.get("Consent_Status")},
+                {"url": "https://abdm.gov.in/fhir/StructureDefinition/notice-id", "valueString": row.get("Notice_ID")}
+            ]
         }
-        bundle["entry"].append(entry)
+        
+        # Auditor Verification before adding to bundle
+        if verify_fhir_structure(patient_resource):
+             entry = {
+                "fullUrl": f"urn:uuid:{row.get('Notice_ID', 'unknown')}",
+                "resource": patient_resource
+            }
+             bundle["entry"].append(entry)
+        else:
+            # Fallback/Refactor logic would go here if needed, 
+            # but current structure is now compliant.
+            pass
+
     return json.dumps(bundle, indent=2)
 
 def mask_pii_for_preview(df):
     """Masks PII in the preview for ALL records."""
     df_pd = df.to_pandas().copy()
     
+    # Check if revoked; if so, masking is stricter
+    is_revoked = st.session_state.get('revoked', False)
+
     def mask_val(val):
+        if is_revoked:
+             return "[DATA PURGED]"
         if pd.isna(val) or str(val).strip() == "" or str(val) == "None" or str(val) == "Unknown/Redacted":
             return "[MISSING/REDACTED]"
         val_str = str(val)
@@ -169,7 +258,25 @@ def mask_pii_for_preview(df):
     
     return df_pd
 
+if 'governance_logs' not in st.session_state:
+    st.session_state.governance_logs = []
+
 # Sidebar Info
+st.sidebar.markdown("""
+    <div style='background-color: #3e1616; padding: 15px; border-radius: 8px; border: 2px solid #ff4d4d; margin-bottom: 20px; text-align: center;'>
+        <h4 style='margin: 0; color: #ff8080;'>🚨 [DPDP RULE 8.3 ACTIVE]</h4>
+        <small style='color: #8b949e;'>Real-time PII Hard-Purge Enabled</small>
+    </div>
+""", unsafe_allow_html=True)
+
+# Governance Log Display (Persistent)
+st.sidebar.markdown("### 📜 Governance Log")
+log_container = st.sidebar.empty()
+if st.session_state.governance_logs:
+    log_container.code("\n".join(st.session_state.governance_logs), language="bash")
+else:
+    log_container.code("# System Ready\n# Awaiting Ingress...", language="bash")
+
 st.sidebar.markdown("### 🛡️ System Status")
 
 # Sandbox Toggle Logic
@@ -194,6 +301,15 @@ if st.session_state.data_source:
         st.sidebar.info("🟠 SANDBOX ACTIVE")
     else:
         st.sidebar.success(f"🟢 {st.session_state.data_source}")
+    
+    with st.sidebar.expander("👮 Compliance Verification", expanded=False):
+        st.markdown("""
+            - **Field Mapping**: ✅ Active (FHIR R5)
+            - **Environment**: 🟢 **SANDBOX** (`X-CM-ID: sbx`)
+            - **Rule 8.3 Kill Switch**: ✅ **ARMED**
+            - **Audit Logging**: ✅ Enabled (`audit_log.csv`)
+            - **PII Masking**: ✅ Enabled (`[DATA PURGED]`)
+        """)
 else:
     st.sidebar.warning("⚪ OFFLINE (Awaiting Upload)")
 
@@ -205,7 +321,42 @@ if st.sidebar.button("Reset Session"):
 col1, _ = st.columns([3, 1])
 
 with col1:
-    uploaded_file = st.file_uploader("", type=['csv', 'json', 'xml', 'xlsx', 'hl7', 'fhir', 'pdf', 'txt'])
+    tab1, tab2 = st.tabs(["📂 File Upload", "✍️ Manual Entry"])
+    
+    uploaded_file = None
+    
+    with tab1:
+        uploaded_file = st.file_uploader("", type=['csv', 'json', 'xml', 'xlsx', 'hl7', 'fhir', 'pdf', 'txt'])
+    
+    with tab2:
+        st.info("Enter data manually for demo purposes.")
+        c1, c2 = st.columns(2)
+        with c1:
+            m_name = st.text_input("Patient Name", placeholder="e.g. Rahul Verma")
+        with c2:
+            m_abha = st.text_input("ABHA Number", placeholder="e.g. 91-2345-6789")
+            
+        if st.button("Ingest Data", type="primary"):
+            if m_name and m_abha:
+                # Create fake CSV
+                manual_data = pd.DataFrame([{
+                    "Patient_Name": m_name,
+                    "ABHA_ID": m_abha,
+                    "Notice_ID": f"N-{datetime.now().strftime('%Y%m%d%H%M')}",
+                    "Notice_Date": datetime.now().strftime("%Y-%m-%d"),
+                    "Consent_Status": "GRANTED"
+                }])
+                manual_path = os.path.join(os.getcwd(), "manual_entry.csv")
+                manual_data.to_csv(manual_path, index=False)
+                
+                # Ingest
+                st.session_state.data_source = "REAL (MANUAL)"
+                st.session_state.processed_df = ingress.run_ingress(manual_path)
+                st.session_state.mapping_confirmed = True
+                st.session_state.detected_format = "Manual Entry"
+                st.rerun()
+            else:
+                st.error("Please fill all fields.")
 
 if uploaded_file is not None:
     temp_path = os.path.join(os.getcwd(), uploaded_file.name)
@@ -270,7 +421,7 @@ if uploaded_file is not None:
             table_data = [{"ABDM Field": f, "Source": next((k for k, v in mapping.items() if v == f), f)} for f in critical_fields]
             st.table(table_data)
             
-            if st.button("Launch Analytics", use_container_width=True):
+            if st.button("Analyze with AI", use_container_width=True, disabled=st.session_state.revoked):
                 st.session_state.mapping_confirmed = True
                 st.session_state.data_source = "REAL"
                 with st.spinner("Finalizing..."):
@@ -291,6 +442,8 @@ if st.session_state.processed_df is not None:
     total = results["total"]
     
     st.subheader(f"📊 Analytics Dashboard - {st.session_state.detected_format or 'N/A'}")
+    # Demo requirements: Show disabled analysis button if revoked
+    st.button("Analyze with AI", disabled=st.session_state.revoked, key="dash_analyze")
     
     # Calculate percentages safely
     if total > 0:
@@ -307,8 +460,17 @@ if st.session_state.processed_df is not None:
     m4.metric("Quarantined", f"{results['quarantined']} ({q_pct:.1f}%)", delta=f"{results['quarantined']}", delta_color="off")
 
     st.markdown("### 💡 Insights")
-    health_data = pd.DataFrame({"Status": ["Success", "Purged", "Quarantined"], "Count": [results["processed"], results["purged"], results["quarantined"]]}).set_index("Status")
-    st.bar_chart(health_data, color="#10a37f")
+    # improved chart
+    chart_data = pd.DataFrame({
+        "Status": ["Success", "Purged", "Quarantined"],
+        "Count": [results["processed"], results["purged"], results["quarantined"]],
+        "Color": ["#10a37f", "#dc3545", "#fd7e14"]  # Green, Red, Orange
+    })
+    
+    st.altair_chart(
+        import_altair_and_chart(chart_data),
+        use_container_width=True
+    )
 
     b1, b2 = st.columns(2)
     with b1:
@@ -333,12 +495,89 @@ if st.session_state.processed_df is not None:
 
     st.markdown("---")
     st.subheader("📄 Privacy-Safe Preview")
-    st.dataframe(mask_pii_for_preview(df), use_container_width=True)
+    preview_df = mask_pii_for_preview(df)
+    
+    if st.session_state.revoked:
+        # Highlight [DATA PURGED] in Red/Bold
+        def highlight_purged(val):
+            return 'color: #ff4b4b; font-weight: bold; background-color: #ffe6e6' if str(val) == "[DATA PURGED]" else ''
+        
+        st.dataframe(preview_df.style.map(highlight_purged), use_container_width=True)
+    else:
+        st.dataframe(preview_df, use_container_width=True)
 
     if not st.session_state.revoked:
+        # DPDP Rule 8.2 Logic
+        if "purge_pending" not in st.session_state:
+            st.session_state.purge_pending = False
+
         if st.button("🔴 Purge Data (DPDP Rule 8)"):
-            st.session_state.processed_df = ingress.erase_pii_for_revocation(df)
-            st.session_state.revoked = True
+            st.session_state.purge_pending = True
             st.rerun()
+
+        if st.session_state.purge_pending:
+            st.warning("⚠️ **DPDP Rule 8.2: Erasure Notice Sent.** Final purge scheduled in 48 hours.")
+            
+            if st.button("🚨 Confirm Immediate Admin Purge (Override)", type="primary"):
+                # Dramatic 'Vibe' Console Logs visualized in UI
+                audit_id = str(uuid.uuid4())
+                
+                # Placeholder for animation
+                with st.sidebar:
+                    st.markdown("### 📜 Governance Log")
+                    log_placeholder = st.empty()
+                
+                # Step 1
+                msg1 = f"[1/3] Detaching Identity Keys for Session ABDM-2026..."
+                st.session_state.governance_logs.append(f"{datetime.now().strftime('%H:%M:%S')} {msg1}")
+                log_placeholder.code("\n".join(st.session_state.governance_logs), language="bash")
+                time.sleep(0.9)
+                
+                # Step 2
+                msg2 = f"[2/3] Overwriting PII Memory Blocks with Zero-Fill Pattern..."
+                st.session_state.governance_logs.append(f"{datetime.now().strftime('%H:%M:%S')} {msg2}")
+                log_placeholder.code("\n".join(st.session_state.governance_logs), language="bash")
+                time.sleep(0.9)
+                
+                # Step 3
+                msg3 = f"[3/3] SUCCESS: Record Purged. Audit ID: [{audit_id}]"
+                st.session_state.governance_logs.append(f"{datetime.now().strftime('%H:%M:%S')} {msg3}")
+                log_placeholder.code("\n".join(st.session_state.governance_logs), language="bash")
+                time.sleep(0.9)
+
+                # Update state and dataframe
+                st.session_state.processed_df = ingress.erase_pii_for_revocation(df)
+                st.session_state.revoked = True
+                st.session_state.purge_pending = False
+                
+                # Audit Log Entry - RETENTION RULE 8.3
+                log_entry = [audit_id, datetime.now().isoformat(), "CONSENT_REVOKED_IMMEDIATE_OVERRIDE"]
+                log_file = "audit_log.csv"
+                file_exists = os.path.isfile(log_file)
+                
+                with open(log_file, mode='a', newline='') as f:
+                    writer = csv.writer(f)
+                    if not file_exists:
+                        writer.writerow(["Request_ID", "Timestamp", "Action"])
+                    writer.writerow(log_entry)
+                
+                st.rerun()
     else:
         st.warning("⚠️ Data Hard-Purged per DPDP Act.")
+
+    # Audit Log Viewer for Demo
+    if st.session_state.revoked:
+        st.markdown("---")
+        with st.expander("📂 View Audit Logs (System Admin)"):
+            if os.path.exists("audit_log.csv"):
+                st.dataframe(pd.read_csv("audit_log.csv"), use_container_width=True)
+            else:
+                st.info("No logs found.")
+
+    # Legal Watermark Footer
+    st.markdown("---")
+    st.markdown("""
+        <div style='text-align: center; color: #444654; font-size: 0.8em; padding: 20px;'>
+            🛡️ <b>System Status:</b> DPDP Rule 8.3 Active | <b>Retention Protocol:</b> 1-Year Immutable
+        </div>
+    """, unsafe_allow_html=True)

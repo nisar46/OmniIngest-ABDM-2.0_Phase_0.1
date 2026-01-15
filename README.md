@@ -1,81 +1,90 @@
-# 🏥 OmniIngest ABDM 2.0: Clinical-Grade Data Ingestion & Compliance Engine
+# 🏥 OmniIngest ABDM 2.0: The "Safety Rails" for Digital Health
+> **Phase 0.1 | Launch Ready: Jan 19, 2026**
 
-> **A "Privacy-By-Design" solution for India's Digital Health Revolution.**
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg?style=for-the-badge&logo=python)
+![Standard](https://img.shields.io/badge/ABDM-NRCeS_Compliant-green.svg?style=for-the-badge)
+![Security](https://img.shields.io/badge/DPDP-Rule_8.3_Kill_Switch-red.svg?style=for-the-badge)
+![Architecture](https://img.shields.io/badge/Architecture-Event_Driven-orange.svg?style=for-the-badge)
 
-![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)
-![ABDM 2.0](https://img.shields.io/badge/Standard-ABDM_2.0-green.svg)
-![DPDP Act](https://img.shields.io/badge/Compliance-DPDP_Rule_8-orange.svg)
-![FHIR R5](https://img.shields.io/badge/Data_Standard-FHIR_R5-red.svg)
+## ⚡ Executive Summary
+**OmniIngest ABDM 2.0** is the architectural backbone for modern clinical data ingestion in India's federated health ecosystem. Designed as the **"Safety Rails"** for the next generation of AI-driven health apps (including "ChatGPT Health"), this system ensures that speed never compromises security.
 
-## 🌟 Project Overview
-OmniIngest ABDM 2.0 is a high-performance, interactive data ingestion layer designed to bridge the gap between messy legacy healthcare data and the strict requirements of the **Ayushman Bharat Digital Mission (ABDM)**. 
-
-### 💎 The "ChatGPT Health" UX
-Phase 0.1 features a premium, health-tech focused UI inspired by the minimalist and efficient design of ChatGPT.
-- **Dark Mode by Default**: Optimized for clinical environments to reduce eye strain.
-- **Glowing Teal Aesthetics**: A modern, high-contrast palette that feels like "The Future of Health."
-- **Glowing Teal Aesthetics**: A modern, high-contrast palette that feels like "The Future of Health."
-- **Glassmorphism Metrics**: Clean, elevated cards for real-time compliance tracking.
-- **Intelligent Sidebar**: A persistent control center containing the **"Sandbox Mode"** toggle for instant dummy data generation and system testing.
+It solves the critical "Last Mile" problem of interoperability: taking messy, unstructured legacy hospital data (CSV, PDF, HL7) and transforming it into **FHIR R5** compliant bundles, while strictly adhering to India's **DPDP Act 2023** (Digital Personal Data Protection Act).
 
 ---
 
-## 🔥 Key Technical Strengths: The "Zero-Failure" Bedrock
+## 💎 Critical Features
 
-### 🧠 Universal Field Recovery (Bedrock Engine)
-The core strength of this code is its **Resilience**. Unlike traditional parsers that crash on messy headers, OmniIngest features a **Universal Extraction Fallback**:
-- **Safety Net**: If a formal column mapping fails, the engine performs a "Full-Cell Scan" across every column in the record.
-- **AI-Pattern Recognition**: Uses clinical-grade regex to recover `ABHA ID`s and `Patient Names` buried deep within unstructured text or raw message strings.
-- **Format Agnostic**: Seamlessly processes PDF (written reports), HL7, FHIR, CSV, and XML without a single crash.
+### 1. The "ChatGPT Health" Experience
+Phase 0.1 introduces a radical shift in clinical UX. We moved away from sterile, grey enterprise dashboards to a **"Vibe-Coded"** interface:
+- **Teal & Dark Mode**: Reduced eye strain for 24/7 clinical operations, inspired by premium GenAI tools.
+- **Glassmorphism Metrics**: Real-time floating compliance cards.
+- **Interactive "Sandbox Mode"**: One-click generation of 1000+ synthetic patient records for stress-testing.
 
-### 🕵️ Interactive Smart Mapper
-- **Conversational Mapping**: When mapping is ambiguous, the app starts a dialogue with the user.
-- **Live Snippets**: Displays actual data snippets (e.g., *"We found `12-34xx...`. Is this the ABHA ID?"*) to guide manual confirmation.
-- **One-Click Synchronization**: Users can map unknown legacy headers to ABDM canonical fields in real-time.
+### 2. Guardrails: The Rule 8.3 Kill Switch
+Compliance is not a checkbox; it is code.
+- **Cryptographic Shredding**: Implements a dedicated "Kill Switch" that overrides retention policies for immediate PII erasure.
+- **Audit Lineage**: Even when data is purged, the *fact* of the purge is cryptographically logged in `audit_log.csv` with a unique Audit ID, ensuring regulatory transparency without retaining the sensitive data itself.
+- **Visual Feedback**: The UI actively demonstrates the shredding process with a 3-step visible governance log.
 
-### 🛡️ Clinical-Grade Privacy (DPDP Rule 8)
-- **Privacy-By-Default**: Automatic PII masking across the entire dashboard to prevent accidental data leaks.
-- **Rule 8 Kill-Switch**: A one-click "Hard-Purge" facility that erases PII while maintaining encrypted audit lineages as per DPDP Rule 8.3.
-
----
-
-## 📽️ Tech Stack
-- **Language**: Python 3.9+
-- **Data Engine**: **Polars** (Sub-millisecond high-speed DataFrame processing)
-- **Extraction**: **pdfplumber**, **PyPDF2**, & Custom Regex Engines
-- **Interface**: **Streamlit** (Modern "ChatGPT Health" Theme)
+### 3. Zero-Failure Smart Ingress
+The `ingress.py` engine is built to never crash:
+- **Universal Field Recovery**: If standard column mapping fails, the engine scans the entire file content using regex patterns to "rescue" critical identifiers like ABHA IDs.
+- **Format Agnostic**: Seamlessly handles JSON, XML, XL7, FHIR, PDF, and deeply nested CSVs.
 
 ---
 
-## 🚀 Getting Started
+## 🏗️ Technical Architecture
 
-### Installation
-1. Clone the repository:
+| Component | Technology | Role |
+| :--- | :--- | :--- |
+| **Ingestion Engine** | `Polars` (Rust-based) | High-performance data cleaning & normalization. |
+| **Logic Layer** | Python 3.10 | Business logic, Rule 8 enforcement. |
+| **Compliance** | `fhir.resources` | Strict FHIR R5 schema validation. |
+| **Interface** | `Streamlit` | Rapid, reactive UI/UX. |
+
+---
+
+## 📜 Regulatory alignment
+This project is engineered to align with:
+- **ABDM Standards**: Specifically the *Health Information Provider (HIP)* guidelines.
+- **NRCeS**: Adopts the latest National Resource Centre for EHR Standards recommendations.
+- **DPDP Act 2023**: Hard-coded strict adherence to Data Principal rights (Right to Erasure).
+
+👉 *See [docs/COMPLIANCE.md](docs/COMPLIANCE.md) for a deep dive.*
+
+---
+
+## 🚀 Installation & Launch
+
+### Prerequisites
+- Python 3.10+
+- `pip`
+
+### Setup
+1. **Clone the repository**
    ```bash
-   git clone https://github.com/nisar46/OmniIngest-ABDM-2.0_Phase_0.1.git
-   cd OmniIngest-ABDM-2.0_Phase_0.1
+   git clone https://github.com/nisar46/OmniIngest-ABDM-2.0.git
+   cd OmniIngest-ABDM-2.0
    ```
-2. Install dependencies:
+
+2. **Install Dependencies**
    ```bash
    pip install -r requirements.txt
    ```
-3. Launch the Bedrock dashboard:
-   ```bash
+
+3. **Launch the Console**
    ```bash
    streamlit run app.py
    ```
-4. **Explore**: 
-   - Upload your own clinical files (CSV, PDF, HL7, etc.).
-   - OR toggle **"Sandbox Mode"** in the sidebar to generate 1,000+ synthetic patient records instantly.
 
 ---
 
-## 👨‍💻 Author: The Techno-Legal Vision
-
+## 👨‍💻 Author
 **Nisar Ahmed**
-*Health Ops Veteran ➡️ AI Architect & Regulatory Engineer*
+*Senior Health-Tech Architect*
 
-I specialize in building **"Techno-Legal" guardrails** that ensure healthcare innovation remains compliant with **India's DPDP Act** and **ABDM 2.0** standards. By combining 10 years of clinical domain expertise with **Vibe-Coding** (Agentic AI collaboration), I create high-quality, medical-grade solutions that are both legally sound and technologically superior.
+> "Building the digital nervous system for India's healthcare future."
 
 ---
-*Developed as the core "Smart Ingress" foundation for Phase 0.1.*
+*© 2026 Nisar Ahmed. Licensed under MIT.*

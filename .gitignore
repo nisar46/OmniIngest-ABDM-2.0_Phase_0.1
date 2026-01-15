@@ -72,3 +72,21 @@ OmniIngest_Demo.ipynb
 # Databases
 *.db
 *.sqlite3
+
+# Node
+node_modules/
+
+# Generated Media (Heavy)
+*.webm
+*.mp4
+ffmpeg/
+videos/
+
+# Intermediate Slides
+slide_*.png
+
+# Runtime Logs & Temp
+audit_log.csv
+manual_entry.csv
+demo_sample.csv
+demo_video_data.csv
