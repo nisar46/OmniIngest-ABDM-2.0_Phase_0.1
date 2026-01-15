@@ -1,4 +1,0 @@
-pt_name,abha-number,clinical_payload,consent_status,notice_id,notice_date,data_purpose,patient_name,abha_id
-Vikram Malhotra,91-1234-5678-9012,"{""diagnosis"": ""Hyper-tension"", ""visit"": ""OPD""}",ACTIVE,N-2026-CONS-v1.2,2026-01-10,Treatment,,
-,,"{""diagnosis"": ""Diabetes Type 2"", ""visit"": ""IPD""}",PENDING,N-2026-CONS-v1.1,2025-12-15,Consultation,Priya Lakshmi,
-,,"{""diagnosis"": ""Annual Checkup""}",REVOKED,N-2025-CONS-v0.9,2025-05-20,Audit,Anil Sharma,ABHA-777

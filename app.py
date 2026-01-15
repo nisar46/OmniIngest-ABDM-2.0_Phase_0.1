@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import polars as pl
 import os
-import ingress
+from src import ingress
 import create_sample_data
 from datetime import datetime
 import uuid
@@ -541,7 +541,7 @@ if st.session_state.processed_df is not None:
                 time.sleep(0.9)
                 
                 # Step 2
-                from compliance_engine import PIIVault
+                from src.compliance_engine import PIIVault
                 vault = PIIVault()
                 crypto_log = vault.shred_keys() # [RULE 8.3 AUDIT]
                 
