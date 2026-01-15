@@ -154,7 +154,14 @@ st.markdown("""
 
 st.title("🏥 OmniIngest ABDM 2.0")
 st.markdown("<p style='color: #8b949e;'>Modern AI-Powered Clinical Data Ingestion</p>", unsafe_allow_html=True)
+st.title("🏥 OmniIngest ABDM 2.0")
+st.markdown("<p style='color: #8b949e;'>Modern AI-Powered Clinical Data Ingestion</p>", unsafe_allow_html=True)
 st.markdown("---")
+
+# ARCHITECT'S NOTE:
+# Streamlit Session State is used here to simulate a 'Persisted User Session' 
+# in a stateless web environment. This allows us to enforce Rule 8 (Erasure) 
+# even if the browser is refreshed, until the session is explicitly reset.
 
 # Session State Initialization
 if 'data_source' not in st.session_state:
