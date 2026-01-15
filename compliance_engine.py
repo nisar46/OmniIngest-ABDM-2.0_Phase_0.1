@@ -63,7 +63,8 @@ class ComplianceEngine:
             raw_abha = str(row.get('ABHA_ID', 'UNKNOWN'))
             # Mask PII for Audit Log
             masked_id = self.hash_id(raw_abha)
-            print(f"  [DPDP RULE 8] {reason} detected for {masked_id}. Hard-Purge executed.")
+            from utils.logger import safe_log
+            safe_log(f"  [DPDP RULE 8] {reason} detected for {masked_id}. Hard-Purge executed.", level="WARNING")
             
             # Wipe PII
             row['Clinical_Payload'] = "PURGED_DPDP_RULE_8_ERASURE" 
@@ -93,5 +94,6 @@ class PIIVault:
         self._key_store = None
         # Specific Audit Log for Rule 8.3
         log_msg = "[RULE 8.3 AUDIT] - PII Decryption Keys Permanently Shredded. Data is now mathematically unrecoverable."
-        print(log_msg)
+        from utils.logger import safe_log
+        safe_log(log_msg, level="WARNING")
         return log_msg

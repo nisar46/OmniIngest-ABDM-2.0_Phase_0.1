@@ -104,7 +104,16 @@ def get_mapping_summary(file_path: str):
         return {}, [], {}
 
 def run_ingress(file_path: str, autofill: bool = False):
-    """Phase 0.1 Ingress with Zero-Failure Logic & Universal Fallback."""
+    """
+    Phase 0.1 Ingress with Zero-Failure Logic & Universal Fallback.
+    
+    ARCHITECT'S NOTE (2026):
+    In real-world hospital ops, data hygiene is low. We cannot reject files just because headers are messy.
+    This module implements a 'Universal Adapter' pattern:
+      1. Try structured read (Polars/JSON).
+      2. If headers mismatch, fuzzy-match against Canonical ABDM Dictionary.
+      3. If critical fields missing, use Regex Heuristics (Zero-Failure) to extract from raw text.
+    """
     ext = os.path.splitext(file_path)[1].lower()
     
     # 1. Loading
@@ -216,11 +225,8 @@ def run_audit(df, label, return_results=False):
     
     if return_results: return res
     
-    # Architect Note: We redact raw counts in production logs to prevent 'inference attacks' on small cohorts.
-    def redact_log(msg):
-        return f"[REDACTED_PII] {msg}"
-        
-    print(redact_log(f"Audit for {label}: Total={res['total']}, OK={res['processed']}, PURGED={res['purged']}, QUARANTINE={res['quarantined']}"))
+    from utils.logger import safe_log
+    safe_log(f"Audit for {label}: Total={res['total']}, OK={res['processed']}, PURGED={res['purged']}, QUARANTINE={res['quarantined']}")
 
 def erase_pii_for_revocation(df):
     """
