@@ -9,7 +9,6 @@
 | **Language** | **Python** | 3.10+ | Core logic & type safety. |
 | **Ingestion** | **Polars** | 0.19+ | Rust-backed DataFrame library for sub-second ETL on large datasets. |
 | **UI Framework** | **Streamlit** | 1.28+ | Rapid frontend prototyping for clinical dashboards. |
-| **Testing** | **Playwright** | 1.40+ | Automated E2E testing for rule compliance verification. |
 | **Compliance** | **Regex & SHA-256** | Standard | Zero-dependency cryptographic shredding & format validation. |
 
 ## 🧬 Key Compliance Implemenations
