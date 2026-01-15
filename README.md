@@ -29,7 +29,7 @@ Phase 0.1 introduces a radical shift in clinical UX. We moved away from sterile,
 ### 2. Guardrails: The Rule 8.3 Kill Switch
 Compliance is not a checkbox; it is code.
 - **Cryptographic Shredding**: Implements a dedicated "Kill Switch" that overrides retention policies for immediate PII erasure.
-- **Audit Lineage**: Even when data is purged, the *fact* of the purge is cryptographically logged in `audit_log.csv` with a unique Audit ID, ensuring regulatory transparency without retaining the sensitive data itself.
+- **Audit Lineage**: Even when data is purged, the *fact* of the purge is cryptographically logged in `audit_2026.json` with a unique Audit ID, ensuring regulatory transparency without retaining the sensitive data itself.
 - **Visual Feedback**: The UI actively demonstrates the shredding process with a 3-step visible governance log.
 
 ![Rule 8.3 Kill Switch](docs/assets/rule_8_3_log.png)

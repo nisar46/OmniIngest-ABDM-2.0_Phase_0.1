@@ -8,6 +8,7 @@ from datetime import datetime
 import uuid
 import csv
 import altair as alt
+import json
 
 import time
 
@@ -314,7 +315,7 @@ if st.session_state.data_source:
             - **Field Mapping**: ✅ Active (FHIR R5)
             - **Environment**: 🟢 **SANDBOX** (`X-CM-ID: sbx`)
             - **Rule 8.3 Kill Switch**: ✅ **ARMED**
-            - **Audit Logging**: ✅ Enabled (`audit_log.csv`)
+            - **Audit Logging**: ✅ Enabled (`audit_2026.json`)
             - **PII Masking**: ✅ Enabled (`[DATA PURGED]`)
         """)
 else:
@@ -561,15 +562,28 @@ if st.session_state.processed_df is not None:
                 st.session_state.purge_pending = False
                 
                 # Audit Log Entry - RETENTION RULE 8.3
-                log_entry = [audit_id, datetime.now().isoformat(), "CONSENT_REVOKED_IMMEDIATE_OVERRIDE"]
-                log_file = "audit_log.csv"
-                file_exists = os.path.isfile(log_file)
+                log_entry = {
+                    "audit_id": audit_id,
+                    "timestamp": datetime.now().isoformat(),
+                    "action": "CONSENT_REVOKED_IMMEDIATE_OVERRIDE",
+                    "actor": "admin_sys_01", # Simulated
+                    "status": "PURGED"
+                }
+                log_file = "audit_2026.json"
                 
-                with open(log_file, mode='a', newline='') as f:
-                    writer = csv.writer(f)
-                    if not file_exists:
-                        writer.writerow(["Request_ID", "Timestamp", "Action"])
-                    writer.writerow(log_entry)
+                # Append to JSON list (Demo-friendly implementation)
+                current_logs = []
+                if os.path.exists(log_file):
+                    try:
+                        with open(log_file, "r") as f:
+                            current_logs = json.load(f)
+                    except json.JSONDecodeError:
+                        current_logs = []
+                
+                current_logs.append(log_entry)
+                
+                with open(log_file, "w") as f:
+                    json.dump(current_logs, f, indent=2)
                 
                 st.rerun()
     else:
@@ -579,8 +593,9 @@ if st.session_state.processed_df is not None:
     if st.session_state.revoked:
         st.markdown("---")
         with st.expander("📂 View Audit Logs (System Admin)"):
-            if os.path.exists("audit_log.csv"):
-                st.dataframe(pd.read_csv("audit_log.csv"), use_container_width=True)
+            if os.path.exists("audit_2026.json"):
+                with open("audit_2026.json", "r") as f:
+                     st.json(json.load(f))
             else:
                 st.info("No logs found.")
 
