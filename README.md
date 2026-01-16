@@ -1,5 +1,5 @@
 # 🏥 OmniIngest ABDM 2.0: The "Safety Rails" for Digital Health
-> **Phase 0.1 | Launch Ready: Jan 19, 2026**
+> **Phase 0.1 | Launch Ready: Jan 20, 2026**
 
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg?style=for-the-badge&logo=python)
 ![Standard](https://img.shields.io/badge/ABDM-NRCeS_Compliant-green.svg?style=for-the-badge)
