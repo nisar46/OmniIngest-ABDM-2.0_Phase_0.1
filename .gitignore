@@ -45,12 +45,15 @@ raw_data.*
 *.pdf
 # Exception for docs
 !docs/*.pdf
+# Specific exclude for Launch PDF (Local only)
+docs/assets/OmniIngest_Launch_2026.pdf
 
 # Media (Keep WebM for Repo, Ignore MP4 for LinkedIn)
 OmniIngest_Demo_2026.mp4
-OmniIngest_Demo_2026.webm
 
 
 # OS Specific
 .DS_Store
 Thumbs.db
+docs/LINKEDIN_LAUNCH_STRATEGY.md
+local_notes/
