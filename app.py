@@ -155,8 +155,7 @@ st.markdown("""
 
 st.title("🏥 OmniIngest ABDM 2.0")
 st.markdown("<p style='color: #8b949e;'>Modern AI-Powered Clinical Data Ingestion</p>", unsafe_allow_html=True)
-st.title("🏥 OmniIngest ABDM 2.0")
-st.markdown("<p style='color: #8b949e;'>Modern AI-Powered Clinical Data Ingestion</p>", unsafe_allow_html=True)
+
 st.markdown("---")
 
 # ARCHITECT'S NOTE:
