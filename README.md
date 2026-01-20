@@ -72,8 +72,8 @@ This project is engineered to align with:
 ### Setup
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/nisar46/OmniIngest-ABDM-2.0.git
-   cd OmniIngest-ABDM-2.0
+   git clone https://github.com/nisar46/OmniIngest-ABDM-2.0_Phase_0.1.git
+   cd OmniIngest-ABDM-2.0_Phase_0.1
    ```
 
 2. **Install Dependencies**
