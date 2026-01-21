@@ -6,7 +6,7 @@
 ![Security](https://img.shields.io/badge/DPDP-Rule_8.3_Kill_Switch-red.svg?style=for-the-badge)
 ![Architecture](https://img.shields.io/badge/Architecture-Event_Driven-orange.svg?style=for-the-badge)
 ![Status](https://img.shields.io/badge/Status-Active-brightgreen)
-![Visitors](https://api.visitorbadge.io/api/visitors?path=nisar46%2FOmniIngest-ABDM-2.0_Phase_0.1&label=Views&labelColor=%232c3e50&countColor=%23008080&style=flat)
+![Visits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fnisar46%2FOmniIngest-ABDM-2.0_Phase_0.1&count_bg=%23008080&title_bg=%232C3E50&icon=&icon_color=%23E7E7E7&title=Visits&edge_flat=false)
 
 ## ⚡ Executive Summary
 **OmniIngest ABDM 2.0** is the architectural backbone for modern clinical data ingestion in India's federated health ecosystem. Designed as the **"Safety Rails"** for the next generation of AI-driven health apps (including "ChatGPT Health"), this system ensures that speed never compromises security.
