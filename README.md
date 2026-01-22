@@ -6,15 +6,14 @@
 ![Security](https://img.shields.io/badge/DPDP-Rule_8.3_Kill_Switch-red.svg?style=for-the-badge)
 ![Architecture](https://img.shields.io/badge/Architecture-Event_Driven-orange.svg?style=for-the-badge)
 ![Status](https://img.shields.io/badge/Status-Active-brightgreen)
-![Visitors](https://api.visitorbadge.io/api/visitors?path=nisar46%2FOmniIngest-ABDM-2.0_Phase_0.1&label=Views&labelColor=%232c3e50&countColor=%23008080&style=flat)
+![Visitors](https://api.visitorbadge.io/api/visitors?path=nisar46%2FOmnigest_ABDM_2.0&label=Views&labelColor=%232c3e50&countColor=%23008080&style=flat)
 
 ## ⚡ Executive Summary
 **OmniIngest ABDM 2.0** is the architectural backbone for modern clinical data ingestion in India's federated health ecosystem. Designed as the **"Safety Rails"** for the next generation of AI-driven health apps (including "ChatGPT Health"), this system ensures that speed never compromises security.
 
 It solves the critical "Last Mile" problem of interoperability: taking messy, unstructured legacy hospital data (CSV, PDF, HL7) and transforming it into **FHIR R5** compliant bundles, while strictly adhering to India's **DPDP Act 2023** (Digital Personal Data Protection Act).
 
-<video src="docs/assets/OmniIngest_Demo_2026.webm" controls="controls" style="max-width: 100%;">
-</video>
+<!-- Video Removed to reduce repo size. See LinkedIn post for demo. -->
 
 ---
 
