@@ -11,9 +11,10 @@
 ## ⚡ Executive Summary
 **OmniIngest ABDM 2.0** is the architectural backbone for modern clinical data ingestion in India's federated health ecosystem. Designed as the **"Safety Rails"** for the next generation of AI-driven health apps (including "ChatGPT Health"), this system ensures that speed never compromises security.
 
-### 📉 The 5-Year Practical Journey (2020 - 2025)
-This software is grounded in **5 years of operational fieldwork**. Between 2020 and 2025, I handled thousands of data entry challenges at **R K Nursing Home**. Those real-world problems are what I used to learn Python and Data Analysis.
-👉 *See the step-by-step evolution: [docs/CAREER_PATH.md](docs/CAREER_PATH.md)*
+### 📉 The 5-Year Practical Journey
+This software is grounded in **5 years of operational fieldwork**. Between 2020 and 2025, I handled thousands of data entry challenges at **R K Nursing Home**. 
+
+👉 *Explore the full analysis of those 5 years in my detailed portfolio: [Healthcare-Data-Analysis-Journey](https://github.com/nisar46/Healthcare-Data-Analysis-Journey)*
 
 It solves the critical "Last Mile" problem of interoperability: taking messy, unstructured legacy hospital data (CSV, PDF, HL7) and transforming it into **FHIR R5** compliant bundles, while strictly adhering to India's **DPDP Act 2023** (Digital Personal Data Protection Act).
 
