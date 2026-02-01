@@ -1,15 +1,19 @@
 # 🏥 OmniIngest ABDM 2.0: The "Safety Rails" for Digital Health
-> **Phase 0.1 | Launch Ready: Jan 20, 2026**
+> **Phase 0.2 | Governance Layer (Budget 2026 Update): Feb 01, 2026**
 
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg?style=for-the-badge&logo=python)
 ![Standard](https://img.shields.io/badge/ABDM-NRCeS_Compliant-green.svg?style=for-the-badge)
 ![Security](https://img.shields.io/badge/DPDP-Rule_8.3_Kill_Switch-red.svg?style=for-the-badge)
-![Architecture](https://img.shields.io/badge/Architecture-Event_Driven-orange.svg?style=for-the-badge)
+![Governance](https://img.shields.io/badge/Governance-Compliance_Engine_v0.2-purple.svg?style=for-the-badge)
 ![Status](https://img.shields.io/badge/Status-Active-brightgreen)
 ![Visitors](https://api.visitorbadge.io/api/visitors?path=nisar46%2FOmnigest_ABDM_2.0&label=Views&labelColor=%232c3e50&countColor=%23008080&style=flat)
 
 ## ⚡ Executive Summary
-**OmniIngest ABDM 2.0** is the architectural backbone for modern clinical data ingestion in India's federated health ecosystem. Designed as the **"Safety Rails"** for the next generation of AI-driven health apps (including "ChatGPT Health"), this system ensures that speed never compromises security.
+**OmniIngest ABDM 2.0** is the architectural backbone for modern clinical data ingestion in India's federated health ecosystem. 
+
+**v0.2 Update (Feb 2026):** In response to the **Union Budget 2026 mandates** for "AI Public Infrastructure," this version introduces a dedicated **Compliance Engine** (`compliance_engine.py`) that enforces:
+1.  **Pseudonymization by Design:** Cryptographic hashing of PII for population health analytics.
+2.  **Auditability:** Immutable logging of data access/purges for government transparency requirements.
 
 ### 📉 The 5-Year Practical Journey
 This software is grounded in **5 years of operational fieldwork**. Between 2020 and 2025, I handled thousands of data entry challenges in **rural Bangalore healthcare**. 
