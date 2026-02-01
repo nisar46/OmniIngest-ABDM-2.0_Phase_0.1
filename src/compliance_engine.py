@@ -63,8 +63,7 @@ class ComplianceEngine:
             raw_abha = str(row.get('ABHA_ID', 'UNKNOWN'))
             # Mask PII for Audit Log
             masked_id = self.hash_id(raw_abha)
-            from .utils.logger import safe_log
-            safe_log(f"  [DPDP RULE 8] {reason} detected for {masked_id}. Hard-Purge executed.", level="WARNING")
+            self.audit_transaction("PURGE", masked_id, reason, "HARD_ERASURE")
             
             # Wipe PII
             row['Clinical_Payload'] = "PURGED_DPDP_RULE_8_ERASURE" 
@@ -76,6 +75,35 @@ class ComplianceEngine:
             row['_Ingest_Status'] = "SUCCESS_LINKED" if row.get('Consent_Status') in ['ACTIVE', 'GRANTED'] else "QUARANTINED_PENDING"
             
         return row
+
+    def pseudonymize_pii(self, row):
+        """
+        [BUDGET 2026: AI GOVERNANCE]
+        Replaces direct identifiers with cryptographic tokens.
+        Allows 'Analytics without Identification'.
+        """
+        if row.get('Patient_Name') and row['Patient_Name'] != "REDACTED":
+            # Create a localized 'Privacy Taken' (Project 'Mask')
+            row['Patient_Name'] = f"Pt_{self.hash_id(row['Patient_Name'])}"
+        
+        if row.get('ABHA_ID') and row['ABHA_ID'] != "REDACTED":
+             row['ABHA_ID'] = f"ABHA_{self.hash_id(row['ABHA_ID'])}"
+             
+        return row
+
+    def audit_transaction(self, action, subject_id, reason, outcome):
+        """
+        [BUDGET 2026: TRANSPARENCY FRAMEWORK]
+        Writes to an immutable ledger (simulated here) for Government Audits.
+        Format: [TIMESTAMP] [ACTION] [SUBJECT] [REASON] -> [OUTCOME]
+        """
+        timestamp = datetime.now().isoformat()
+        log_entry = f"[{timestamp}] [GOVERNANCE] {action} on {subject_id}: {reason} -> {outcome}"
+        
+        # In a real app, this goes to a WORM (Write Once Read Many) drive.
+        # Here we use our safe logger.
+        from .utils.logger import safe_log
+        safe_log(log_entry, level="INFO")
 
 class PIIVault:
     """
