@@ -102,8 +102,11 @@ class ComplianceEngine:
         
         # In a real app, this goes to a WORM (Write Once Read Many) drive.
         # Here we use our safe logger.
-        from .utils.logger import safe_log
-        safe_log(log_entry, level="INFO")
+        try:
+            from utils.logger import safe_log
+        except ImportError:
+            # Fallback if running as proper package
+            from .utils.logger import safe_log
 
 class PIIVault:
     """
@@ -122,6 +125,9 @@ class PIIVault:
         self._key_store = None
         # Specific Audit Log for Rule 8.3
         log_msg = "[RULE 8.3 AUDIT] - PII Decryption Keys Permanently Shredded. Data is now mathematically unrecoverable."
-        from .utils.logger import safe_log
+        try:
+            from utils.logger import safe_log
+        except ImportError:
+            from .utils.logger import safe_log
         safe_log(log_msg, level="WARNING")
         return log_msg
