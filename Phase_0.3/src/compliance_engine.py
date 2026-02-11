@@ -63,7 +63,8 @@ class ComplianceEngine:
             raw_abha = str(row.get('ABHA_ID', 'UNKNOWN'))
             # Mask PII for Audit Log
             masked_id = self.hash_id(raw_abha)
-            self.audit_transaction("PURGE", masked_id, reason, "HARD_ERASURE")
+            from .utils.logger import safe_log
+            safe_log(f"  [DPDP RULE 8] {reason} detected for {masked_id}. Hard-Purge executed.", level="WARNING")
             
             # Wipe PII
             row['Clinical_Payload'] = "PURGED_DPDP_RULE_8_ERASURE" 
@@ -75,38 +76,6 @@ class ComplianceEngine:
             row['_Ingest_Status'] = "SUCCESS_LINKED" if row.get('Consent_Status') in ['ACTIVE', 'GRANTED'] else "QUARANTINED_PENDING"
             
         return row
-
-    def pseudonymize_pii(self, row):
-        """
-        [BUDGET 2026: AI GOVERNANCE]
-        Replaces direct identifiers with cryptographic tokens.
-        Allows 'Analytics without Identification'.
-        """
-        if row.get('Patient_Name') and row['Patient_Name'] != "REDACTED":
-            # Create a localized 'Privacy Taken' (Project 'Mask')
-            row['Patient_Name'] = f"Pt_{self.hash_id(row['Patient_Name'])}"
-        
-        if row.get('ABHA_ID') and row['ABHA_ID'] != "REDACTED":
-             row['ABHA_ID'] = f"ABHA_{self.hash_id(row['ABHA_ID'])}"
-             
-        return row
-
-    def audit_transaction(self, action, subject_id, reason, outcome):
-        """
-        [BUDGET 2026: TRANSPARENCY FRAMEWORK]
-        Writes to an immutable ledger (simulated here) for Government Audits.
-        Format: [TIMESTAMP] [ACTION] [SUBJECT] [REASON] -> [OUTCOME]
-        """
-        timestamp = datetime.now().isoformat()
-        log_entry = f"[{timestamp}] [GOVERNANCE] {action} on {subject_id}: {reason} -> {outcome}"
-        
-        # In a real app, this goes to a WORM (Write Once Read Many) drive.
-        # Here we use our safe logger.
-        try:
-            from utils.logger import safe_log
-        except ImportError:
-            # Fallback if running as proper package
-            from .utils.logger import safe_log
 
 class PIIVault:
     """
@@ -125,9 +94,93 @@ class PIIVault:
         self._key_store = None
         # Specific Audit Log for Rule 8.3
         log_msg = "[RULE 8.3 AUDIT] - PII Decryption Keys Permanently Shredded. Data is now mathematically unrecoverable."
-        try:
-            from utils.logger import safe_log
-        except ImportError:
-            from .utils.logger import safe_log
+        from .utils.logger import safe_log
         safe_log(log_msg, level="WARNING")
         return log_msg
+
+# --- Moved from app.py for Refactoring ---
+
+def verify_fhir_structure(resource):
+    """Lead Auditor Check: Ensures Patient_Name is properly nested as {'name': [{'text': '...'}]} per FHIR R5."""
+    if "resourceType" in resource and resource["resourceType"] == "Patient":
+        name_block = resource.get("name", [])
+        if not name_block or not isinstance(name_block, list) or "text" not in name_block[0]:
+            return False
+    return True
+
+def get_fhir_bundle(df):
+    """Generates a FHIR R5 Bundle collection from the processed dataframe with nested name structures."""
+    import json
+    import polars as pl
+    bundle = {
+        "resourceType": "Bundle",
+        "type": "collection",
+        "timestamp": datetime.now().isoformat(),
+        "entry": []
+    }
+    
+    # helper for polars vs pandas
+    if isinstance(df, pd.DataFrame):
+         records = df.to_dict('records')
+    else:
+         # Assume polars
+         processed_df_pl = df.filter(pl.col("Ingest_Status") == "PROCESSED")
+         records = processed_df_pl.to_dicts()
+
+    for row in records:
+        patient_resource = {
+            "resourceType": "Patient",
+            "identifier": [{"system": "https://healthidsbx.abdm.gov.in", "value": row.get("ABHA_ID")}],
+            "name": [{"text": row.get("Patient_Name")}], # Compliant Nesting
+            "extension": [
+                {"url": "https://abdm.gov.in/fhir/StructureDefinition/consent-status", "valueString": row.get("Consent_Status")},
+                {"url": "https://abdm.gov.in/fhir/StructureDefinition/notice-id", "valueString": row.get("Notice_ID")}
+            ]
+        }
+        
+        # Auditor Verification before adding to bundle
+        if verify_fhir_structure(patient_resource):
+             entry = {
+                "fullUrl": f"urn:uuid:{row.get('Notice_ID', 'unknown')}",
+                "resource": patient_resource
+            }
+             bundle["entry"].append(entry)
+        else:
+            pass
+
+    return json.dumps(bundle, indent=2)
+
+def mask_pii_for_preview(df, is_revoked=False, reveal_pii=False):
+    """Masks PII in the preview for ALL records."""
+    # Convert to pandas if polars
+    if not isinstance(df, pd.DataFrame):
+        df_pd = df.to_pandas().copy()
+    else:
+        df_pd = df.copy()
+    
+    def mask_val(val):
+        if is_revoked:
+             return "[DATA PURGED]"
+        if reveal_pii:
+             return val # Show real name if Auditor requests
+             
+        if pd.isna(val) or str(val).strip() == "" or str(val) == "None" or str(val) == "Unknown/Redacted":
+            return "[MISSING/REDACTED]"
+        val_str = str(val)
+        if len(val_str) < 4:
+            return "****"
+        return val_str[:2] + "****" + val_str[-2:] if len(val_str) > 4 else val_str[:1] + "****"
+        
+    def mask_payload(val):
+        if pd.isna(val) or str(val).strip() == "":
+            return "[EMPTY_PAYLOAD]"
+        return "{'clinical_data': 'PROTECTED_BY_DPDP_RULE_8'}"
+
+    if 'Patient_Name' in df_pd.columns:
+        df_pd['Patient_Name'] = df_pd['Patient_Name'].apply(mask_val)
+    if 'ABHA_ID' in df_pd.columns:
+        df_pd['ABHA_ID'] = df_pd['ABHA_ID'].apply(mask_val)
+    if 'Clinical_Payload' in df_pd.columns:
+        df_pd['Clinical_Payload'] = df_pd['Clinical_Payload'].apply(mask_payload)
+    
+    return df_pd

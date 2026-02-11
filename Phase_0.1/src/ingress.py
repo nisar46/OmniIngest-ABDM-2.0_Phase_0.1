@@ -129,6 +129,10 @@ def run_ingress(file_path: str, autofill: bool = False):
         except:
             if ext in ['.xlsx', '.xls']:
                 lf = pl.read_excel(file_path).lazy()
+            elif ext == '.pdf':
+                from . import ingress_pdf
+                # PDF extraction returns eager DF, so we use lazy() on it
+                lf = ingress_pdf.extract_from_pdf(file_path).lazy() 
             else:
                 raise ValueError(f"Ingress failed for format: {ext}")
 

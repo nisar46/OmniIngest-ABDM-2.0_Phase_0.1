@@ -1,3 +1,4 @@
+
 import streamlit as st
 import pandas as pd
 import polars as pl
@@ -9,7 +10,6 @@ import uuid
 import csv
 import altair as alt
 import json
-
 import time
 
 def verify_fhir_structure(resource):
@@ -51,8 +51,6 @@ def get_fhir_bundle(df):
             }
              bundle["entry"].append(entry)
         else:
-            # Fallback/Refactor logic would go here if needed, 
-            # but current structure is now compliant.
             pass
 
     return json.dumps(bundle, indent=2)
@@ -158,11 +156,6 @@ st.markdown("<p style='color: #8b949e;'>Modern AI-Powered Clinical Data Ingestio
 
 st.markdown("---")
 
-# ARCHITECT'S NOTE:
-# Streamlit Session State is used here to simulate a 'Persisted User Session' 
-# in a stateless web environment. This allows us to enforce Rule 8 (Erasure) 
-# even if the browser is refreshed, until the session is explicitly reset.
-
 # Session State Initialization
 if 'data_source' not in st.session_state:
     st.session_state.data_source = None
@@ -196,43 +189,6 @@ def reset_state():
     st.session_state.revoked = False
     st.session_state.detected_format = None
     st.session_state.manual_mapping = {}
-
-def get_fhir_bundle(df):
-    """Generates a FHIR R5 Bundle collection from the processed dataframe."""
-    import json
-    bundle = {
-        "resourceType": "Bundle",
-        "type": "collection",
-        "timestamp": datetime.now().isoformat(),
-        "entry": []
-    }
-    
-    processed_df = df.filter(pl.col("Ingest_Status") == "PROCESSED")
-    
-    for row in processed_df.to_dicts():
-        patient_resource = {
-            "resourceType": "Patient",
-            "identifier": [{"system": "https://healthidsbx.abdm.gov.in", "value": row.get("ABHA_ID")}],
-            "name": [{"text": row.get("Patient_Name")}], # Compliant Nesting
-            "extension": [
-                {"url": "https://abdm.gov.in/fhir/StructureDefinition/consent-status", "valueString": row.get("Consent_Status")},
-                {"url": "https://abdm.gov.in/fhir/StructureDefinition/notice-id", "valueString": row.get("Notice_ID")}
-            ]
-        }
-        
-        # Auditor Verification before adding to bundle
-        if verify_fhir_structure(patient_resource):
-             entry = {
-                "fullUrl": f"urn:uuid:{row.get('Notice_ID', 'unknown')}",
-                "resource": patient_resource
-            }
-             bundle["entry"].append(entry)
-        else:
-            # Fallback/Refactor logic would go here if needed, 
-            # but current structure is now compliant.
-            pass
-
-    return json.dumps(bundle, indent=2)
 
 def mask_pii_for_preview(df):
     """Masks PII in the preview for ALL records."""
