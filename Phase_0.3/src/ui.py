@@ -91,8 +91,8 @@ def setup_page():
         """, unsafe_allow_html=True)
 
 def render_header():
-    st.title("🏥 OmniIngest | The ORCHESTRA™ Gateway")
-    st.markdown("<p style='color: #8b949e;'>Phase 0.3: High-Performance Clinical Ingestion & Orchestration</p>", unsafe_allow_html=True)
+    st.title("🏥 OmniIngest | Enterprise Clinical Gateway")
+    st.markdown("<p style='color: #8b949e;'>Phase 0.3: High-Performance Clinical Ingestion Master Build</p>", unsafe_allow_html=True)
     st.markdown("---")
 
 def render_governance_sidebar(governance_logs):

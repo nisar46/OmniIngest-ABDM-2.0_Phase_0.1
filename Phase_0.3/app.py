@@ -107,7 +107,7 @@ with col1:
         st.info("Enter data manually for demo purposes.")
         # (Manual entry logic preserved but simplified for brevity in this refactor step)
         if st.button("Generate Dummy Manual Data"):
-             st.info("Manual Entry Module - Integrated via ORCHESTRA™ Gateway")
+             st.info("Manual Entry Module - Integrated via Clinical Gateway")
 
 # File Processing Logic
 if uploaded_file is not None:
@@ -209,4 +209,4 @@ if st.session_state.processed_df is not None:
 
 # Footer
 st.markdown("---")
-st.markdown("<div style='text-align: center; color: #444654;'>🛡️ <b>OmniIngest Phase 0.3:</b> The Orchestration Foundation | Ready for ORCHESTRA™ Evolution</div>", unsafe_allow_html=True)
+st.markdown("<div style='text-align: center; color: #444654;'>🛡️ <b>OmniIngest Phase 0.3:</b> The Master Build | Professional Clinical Data Ingestion</div>", unsafe_allow_html=True)
